@@ -6,6 +6,7 @@
 
 ## General Info
 This browser based web application to ...
+* Hi my name is Alissa. I'm excited about this project because I think it will be interesting to go through all of the phases of developing this idea.
 	
 ## Technologies
 Technologies used for this project:
