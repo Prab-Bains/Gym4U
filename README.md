@@ -6,6 +6,7 @@
 
 ## General Info
 This browser based web application to ...
+Hi my name is Prabhjeet Bains and I am looking forward to starting the project.
 	
 ## Technologies
 Technologies used for this project:
