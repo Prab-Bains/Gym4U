@@ -1,3 +1,35 @@
-* {
-    background-color: darkblue;
+body{
+    background-color: black;
+    color: white;
+}
+
+#top_nav{
+    border-bottom: 5px solid #00e6d0;
+}
+
+#bottom_nav{
+    border-top: 5px solid #00e6d0;
+}
+
+#background_image{
+    width: 40%;
+    border: 5px solid #00e6d0;
+}
+
+.btn{
+    background-color: #00e6d0;
+}
+
+.offcanvas{
+    background-color: black;
+    border: 5px solid #00e6d0;
+}
+
+.btn-close{
+    background-color: #00e6d0;
+}
+
+.list-group-item{
+    background-color: #00e6d0;
+    border: solid black;
 }

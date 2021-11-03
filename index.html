@@ -10,23 +10,26 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
+    <!-- Our Own CSS-->
+    <link rel="stylesheet" type="text/css" href="./styles/my_style.css">
+
     <title>Gym4U</title>
 </head>
 
 
 <body>
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+    <!-- navbar-light bg-secondary -->
+    <nav id="top_nav" class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Gym4U</a>
+            <img src="./images/logo_without_text.png" class="img-fluid" alt="logo" style="width: 50px; height: 50px;">
 
             <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
                 aria-controls="offcanvasRight">&#9776;</button>
 
-            <div class="offcanvas offcanvas-end bg-dark" tabindex="-1" id="offcanvasRight"
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
                 aria-labelledby="offcanvasRightLabel">
                 <div class="offcanvas-header">
-                    <button type="button" class="btn-close text-reset bg-light" data-bs-dismiss="offcanvas"
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                         aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
@@ -42,23 +45,21 @@
         </div>
     </nav>
 
-    <div class="px-4 py-5 my-5 text-center bg-secondary">
-        <!-- <img class="d-block mx-auto mb-4" src="images/Logo.png" alt="" width="100%" height="100%"> -->
-        <h1 class="display-5 fw-bold">Cheaper</h1>
-        <h1 class="display-5 fw-bold">Private</h1>
-        <h1 class="display-5 fw-bold">Workouts</h1>
+    <div class="px-4 py-5 my-5 text-center">
+        <img class="d-block mx-auto mb-4" src="images/background_image.jpg" alt="" id="background_image">
+        <h1 class="display-5 fw-bold">Convienient, Cheaper Workouts</h1>
 
         <br />
         <div class="col-lg-6 mx-auto">
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <button type="button" class="btn btn-warning btn-lg px-4 gap-3">Login</button>
-                <button type="button" class="btn btn-warning btn-lg px-4 gap-3">Sign Up</button>
-
+                <button type="button" class="btn btn-lg px-4 gap-3">Login</button>
+                <button type="button" class="btn btn-lg px-4 gap-3">Sign Up</button>
+                <!-- btn-success -->
             </div>
         </div>
     </div>
 
-    <footer class="navbar justify-content-evenly bg-secondary fixed-bottom">
+    <footer id="bottom_nav" class="navbar justify-content-evenly fixed-bottom">
         <div class="container py-1">
             <h5>Help</h5>
             <h5>Terms and Conditions</h5>
