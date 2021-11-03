@@ -71,7 +71,7 @@
                 <!-- <img src="./images/logo3.png" class="img-fluid" alt="Card"> -->
             </div>
             <div id="firebaseui-auth-container"></div>
-            <button type="submit" class="btn btn-primary" id="register">Sign up</button>
+            <button type="submit" class="btn btn-primary" id="register" onClick="move_to_signup()">Sign up</button>
         </div>
     </div>
     <footer id="bottom_nav" class="navbar justify-content-evenly fixed-bottom">
@@ -121,6 +121,11 @@
 
     // The start method will wait until the DOM is loaded.
     ui.start('#firebaseui-auth-container', uiConfig);
+
+    function move_to_signup() {
+        var link = 'signup.html'
+        location.replace(link);
+    }
 
 
 </script>
