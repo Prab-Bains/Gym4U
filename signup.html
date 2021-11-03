@@ -60,17 +60,21 @@
             </div>
         </div>
     </nav>
-
-
-    <label for="pass" class="label">Email Address</label>
-    <input id="email_input" name="new_email" type="text"><br>
-    <label for="pass" class="label">Password</label>
-    <input id="new_pw_1" type="password" class="input" data-type="password"><br>
-    <label for="pass" class="label">Repeat Password</label>
-    <input id="new_pw_2" type="password" class="input" data-type="password"><br>
-    <input type="submit" onClick="signup();">
-
-
+    <section>
+        <div class='label-wrap'>
+            <div class='sign-label'><h1>Welcome to Gym4U!!!</h1></div>
+            <div class='sign-image'><img src="./images/signup_background_img.jpg" class="img-fluid" alt="signup"></div>           
+        </div>
+        <div style="text-align: center;">
+            <label for="pass" class="label">Email Address</label>
+            <input id="email_input" name="new_email" type="text"><br>
+            <label for="pass" class="label">Password</label>
+            <input id="new_pw_1" type="password" class="input" data-type="password"><br>
+            <label for="pass" class="label">Repeat Password</label>
+            <input id="new_pw_2" type="password" class="input" data-type="password"><br>
+            <button type="button" class="btn btn-lg px-4 gap-3" onClick="signup();">Summit</button>
+        </div>
+    </section>
     <footer id="bottom_nav" class="navbar justify-content-evenly fixed-bottom">
         <div class="container py-1">
             <h5>Help</h5>
@@ -90,21 +94,22 @@
         const new_pw_2 = document.getElementById("new_pw_2").value;
         var link = 'index.html'
 
-        if (new_pw_1 == new_pw_2){
-        firebase.auth().createUserWithEmailAndPassword(email_input, new_pw_1)
-            .then((userCredential) => {
-                // Signed in
-                var user = userCredential.user;
-                alert("You sign up for Gym4U successfully!")
-                location.replace(link);
-                // ...
-            })
-            .catch((error) => {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                // ..
-            });
-        }else{
+        if (new_pw_1 == new_pw_2) {
+            firebase.auth().createUserWithEmailAndPassword(email_input, new_pw_1)
+                .then((userCredential) => {
+                    // Signed in
+                    var user = userCredential.user;
+                    alert("You sign up for Gym4U successfully!")
+                    location.replace(link);
+                    // ...
+                })
+                .catch((error) => {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    alert('Error Code:' + errorCode + '\n' + 'Error Message:' + error.message);
+                    // ..
+                });
+        } else {
             alert("Passwards are must be matched. Check again, please.")
         }
     }
