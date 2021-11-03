@@ -1,11 +1,11 @@
-var  firebaseConfig = {
-    apiKey: "AIzaSyDN8vIl9mp5gk_73rwP2-6h8MqiMjq41eg",
-    authDomain: "demo08-comp1800-a95ea.firebaseapp.com",
-    projectId: "demo08-comp1800-a95ea",
-    storageBucket: "demo08-comp1800-a95ea.appspot.com",
-    messagingSenderId: "902331516254",
-    appId: "1:902331516254:web:33214adf6336c360b4fbcf"
-    };
-    
-  
-    const app = firebase.initializeApp(firebaseConfig);
+var firebaseConfig = {
+    apiKey: "AIzaSyART4gYv4W0BvIcT0yYkhX7GNj53p-zSdc",
+    authDomain: "gym4u-1a561.firebaseapp.com",
+    projectId: "gym4u-1a561",
+    storageBucket: "gym4u-1a561.appspot.com",
+    messagingSenderId: "600241083631",
+    appId: "1:600241083631:web:5d34b3ca0c55592569771a"
+};
+
+// Initialize Firebase
+const app = firebase.initializeApp(firebaseConfig);

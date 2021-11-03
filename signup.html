@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -31,7 +31,6 @@
     <!-- Link to the api keys for your firebase project -->
 
     <script src="scripts/firebaseAPI.js"></script>
-
 </head>
 
 <body>
@@ -63,64 +62,50 @@
     </nav>
 
 
-    <div id="login_body">
-        <div style="text-align: center;">
-            <div style="text-align: center;">
-                <!-- <img src="./images/logo.png" class="img-fluid" alt="Card"> -->
-                <img src="./images/logo2_b.png" class="img-fluid" alt="Card">
-                <!-- <img src="./images/logo3.png" class="img-fluid" alt="Card"> -->
-            </div>
-            <div id="firebaseui-auth-container"></div>
-            <button type="submit" class="btn btn-primary" id="register">Sign up</button>
-        </div>
-    </div>
+    <label for="pass" class="label">Email Address</label>
+    <input id="email_input" name="new_email" type="text"><br>
+    <label for="pass" class="label">Password</label>
+    <input id="new_pw_1" type="password" class="input" data-type="password"><br>
+    <label for="pass" class="label">Repeat Password</label>
+    <input id="new_pw_2" type="password" class="input" data-type="password"><br>
+    <input type="submit" onClick="signup();">
+
+
     <footer id="bottom_nav" class="navbar justify-content-evenly fixed-bottom">
         <div class="container py-1">
             <h5>Help</h5>
             <h5>Terms and Conditions</h5>
             <h5>FAQ</h5>
         </div>
+
 </body>
 
 </html>
 
-
 <script>
-    var ui = new firebaseui.auth.AuthUI(firebase.auth());
-    var uiConfig = {
-        callbacks: {
-            signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-                // User successfully signed in.
-                // Return type determines whether we continue the redirect automatically
-                // or whether we leave that to developer to handle.
-                return true;
-            },
-            uiShown: function () {
-                // The widget is rendered.
-                // Hide the loader.
-                document.getElementById('loader').style.display = 'none';
-            }
-        },
-        // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
-        signInFlow: 'popup',
-        signInSuccessUrl: './index.html', // We need to write here.
-        signInOptions: [
-            // Leave the lines as is for the providers you want to offer your users.
-            //firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-            //firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-            //firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-            //firebase.auth.GithubAuthProvider.PROVIDER_ID,
-            firebase.auth.EmailAuthProvider.PROVIDER_ID,
-            //firebase.auth.PhoneAuthProvider.PROVIDER_ID
-        ],
-        // Terms of service url.
-        tosUrl: '<your-tos-url>',
-        // Privacy policy url.
-        privacyPolicyUrl: '<your-privacy-policy-url>'
-    };
+    function signup() {
 
-    // The start method will wait until the DOM is loaded.
-    ui.start('#firebaseui-auth-container', uiConfig);
+        const email_input = document.getElementById("email_input").value;
+        const new_pw_1 = document.getElementById("new_pw_1").value;
+        const new_pw_2 = document.getElementById("new_pw_2").value;
+        var link = 'index.html'
 
-
+        if (new_pw_1 == new_pw_2){
+        firebase.auth().createUserWithEmailAndPassword(email_input, new_pw_1)
+            .then((userCredential) => {
+                // Signed in
+                var user = userCredential.user;
+                alert("You sign up for Gym4U successfully!")
+                location.replace(link);
+                // ...
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                // ..
+            });
+        }else{
+            alert("Passwards are must be matched. Check again, please.")
+        }
+    }
 </script>
