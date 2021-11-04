@@ -21,6 +21,12 @@ body{
     background-color: #00e6d0;
 }
 
+.btn:hover{
+    background-color: black;
+    color: white;
+    border: white;
+}
+
 .offcanvas{
     background-color: black;
     border: 5px solid #00e6d0;
