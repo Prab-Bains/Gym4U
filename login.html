@@ -4,41 +4,21 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="comp1800-Gym4U" content="Gym4U">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <!-- Our Own CSS-->
-    <link rel="stylesheet" type="text/css" href="./styles/my_style.css">
-
-    <!-- Firebase 8 CDNs-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
-        </script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
-
-
-    <!-- Link to the api keys for your firebase project -->
-
-    <script src="scripts/firebaseAPI.js"></script>
-
+    <title>Gym4U</title>
 </head>
+
 
 <body>
     <!-- navbar-light bg-secondary -->
     <nav id="top_nav" class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <img src="./images/logo_without_text.png" class="img-fluid" alt="logo" style="width: 50px; height: 50px;">
+            <a href="main.html"><img src="./images/logo_without_text.png" class="img-fluid" alt="logo" style="width: 50px; height: 50px;"></a>
 
             <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
                 aria-controls="offcanvasRight">&#9776;</button>
@@ -62,70 +42,51 @@
         </div>
     </nav>
 
-
-    <div id="login_body">
-        <div style="text-align: center;">
-            <div style="text-align: center;">
-                <!-- <img src="./images/logo.png" class="img-fluid" alt="Card"> -->
-                <img src="./images/logo2_b.png" class="img-fluid" alt="Card">
-                <!-- <img src="./images/logo3.png" class="img-fluid" alt="Card"> -->
+    <div class="px-4 py-5 my-5 text-center bg-secondary">
+        <!-- <img class="d-block mx-auto mb-4" src="images/Logo.png" alt="" width="100%" height="100%"> -->
+        <h1 class="display-5 fw-bold">Gym4U</h1>
+        <br/>
+        <br/>
+        <input id="login-email" type="text" placeholder="Email">
+        <br/>
+        <br/>
+        <input id="login-password" type="password" placeholder="Password">
+        <br />
+        <br/>
+        <div class="col-lg-6 mx-auto">
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <button type="button" class="btn btn-warning btn-lg px-4 gap-3">Login</button>
+                <button type="button" class="btn btn-outline-warning btn-lg px-4 gap-3">Cancel</button>
             </div>
-            <div id="firebaseui-auth-container"></div>
-            <button type="submit" class="btn btn-primary" id="register" onClick="move_to_signup()">Sign up</button>
         </div>
+        <br/>
+        <p text-align = "center">Don't have a profile? <a href="#signup">Sign up!</a></p>
     </div>
-    <footer id="bottom_nav" class="navbar justify-content-evenly fixed-bottom">
+
+    <footer class="navbar justify-content-evenly bg-secondary fixed-bottom">
         <div class="container py-1">
             <h5>Help</h5>
             <h5>Terms and Conditions</h5>
             <h5>FAQ</h5>
         </div>
+
+    </footer>
+
+
+
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+        </script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
 </body>
 
 </html>
-
-
-<script>
-    var ui = new firebaseui.auth.AuthUI(firebase.auth());
-    var uiConfig = {
-        callbacks: {
-            signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-                // User successfully signed in.
-                // Return type determines whether we continue the redirect automatically
-                // or whether we leave that to developer to handle.
-                return true;
-            },
-            uiShown: function () {
-                // The widget is rendered.
-                // Hide the loader.
-                document.getElementById('loader').style.display = 'none';
-            }
-        },
-        // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
-        signInFlow: 'popup',
-        signInSuccessUrl: './index.html', // We need to write here.
-        signInOptions: [
-            // Leave the lines as is for the providers you want to offer your users.
-            //firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-            //firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-            //firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-            //firebase.auth.GithubAuthProvider.PROVIDER_ID,
-            firebase.auth.EmailAuthProvider.PROVIDER_ID,
-            //firebase.auth.PhoneAuthProvider.PROVIDER_ID
-        ],
-        // Terms of service url.
-        tosUrl: '<your-tos-url>',
-        // Privacy policy url.
-        privacyPolicyUrl: '<your-privacy-policy-url>'
-    };
-
-    // The start method will wait until the DOM is loaded.
-    ui.start('#firebaseui-auth-container', uiConfig);
-
-    function move_to_signup() {
-        var link = 'signup.html'
-        location.replace(link);
-    }
-
-
-</script>
