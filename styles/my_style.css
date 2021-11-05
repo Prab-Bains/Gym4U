@@ -7,6 +7,10 @@ body{
     border-bottom: 3px solid #00e6d0;
 }
 
+/* #logo{
+   justify-self: center; 
+} */
+
 
 .signup-input{
     display:inline-block;
