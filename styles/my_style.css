@@ -74,3 +74,16 @@ h1 {
     letter-spacing: 1px;
     word-spacing: 3px;
 }
+
+a:link{
+    color: white;
+    text-decoration: none;
+}
+
+a:hover{
+    color: #00e6d0;
+}
+
+a:visited{
+    color: white;
+}
