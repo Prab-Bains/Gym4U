@@ -7,11 +7,18 @@ body{
     border-bottom: 3px solid #00e6d0;
 }
 
-#bottom_nav{
-    border-top: 3px solid #00e6d0;
+
+.signup-input{
+    display:inline-block;
+    text-align: left;
 }
 
-#background_image, .sign-image{
+#bottom_nav{
+    border-top: 3px solid #00e6d0;
+    background-color: black;
+}
+
+#background_image{
     width: 40%;
     border: 3px solid #00e6d0;
 }
