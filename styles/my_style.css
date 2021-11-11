@@ -107,3 +107,12 @@ a:visited{
     background-color: black;
     margin: 20px;
 }
+
+.helpText{
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.helpText > p{
+    font-size: 24px;
+}
