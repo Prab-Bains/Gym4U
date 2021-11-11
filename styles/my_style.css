@@ -7,10 +7,6 @@ body{
     border-bottom: 3px solid #00e6d0;
 }
 
-/* #logo{
-   justify-self: center; 
-} */
-
 
 .signup-input{
     display:inline-block;
@@ -97,4 +93,17 @@ a:hover{
 
 a:visited{
     color: white;
+}
+
+.card-title{
+    color: white;
+}
+
+.card-text{
+    color: white;
+}
+
+.card{
+    background-color: black;
+    margin: 20px;
 }
