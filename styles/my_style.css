@@ -116,3 +116,8 @@ a:visited{
 .helpText > p{
     font-size: 24px;
 }
+
+#hikeCardTemplate > img{
+    width: 100px;
+    height: 100px;
+}
