@@ -34,10 +34,12 @@
 
 <body>
 
-    <button type="button" class="btn btn-lg px-4 gap-3" onClick="writeReview()">Write data to DB</button> 
+    <button type="button" class="btn btn-lg px-4 gap-3" onClick="writePaymentInfo()">Write Payment Data to DB</button>
+    <button type="button" class="btn btn-lg px-4 gap-3" onClick="writeUserInfo()">Write User Data to DB</button> 
+    <button type="button" class="btn btn-lg px-4 gap-3" onClick="writeGymInfo()">Write Gym Data to DB</button> 
 
     <script>
-        function writeReview() {
+        function writePaymentInfo() {
             console.log("in")
             let Title = "Test_title";
             let Level = 3;
@@ -72,6 +74,70 @@
                 }
             });
         }
+
+        function writeUserInfo() {
+            console.log("in")
+            let Title = "Test_title";
+            let Level = 3;
+            let Season = "Fall";
+            let Description = "Is this work?";
+            let Flooded = "A";
+            let Scrambled = "B";
+            let uid = "aaa"
+            console.log(Title, Level, Season, Description, Flooded, Scrambled);
+
+
+            firebase.auth().onAuthStateChanged(user => {
+                if (user) {
+                    var currentUser = db.collection("users").doc(uid)
+                    var userID = user.uid;
+                    //get the document for current user.
+                    currentUser.get()
+                        .then(userDoc => {
+                            db.collection("Reviews").add({
+                                UserID: userID,
+                                Title: Title,
+                                Level: Level,
+                                Season: Season,
+                                Description: Description,
+                                Flooded: Flooded,
+                                Scrambled: Scrambled
+
+                            });
+                        })
+                } else {
+                    // No user is signed in.
+                }
+            });
+        }
+
+        function writeGymInfo() {
+            let Address = "13213-311 Bcit dr";
+            let gymId = "UniqueGymID";
+            let GymName = "Aiden's Gym"
+            let GymEquipment = "Bar";
+            let Size = "40 fq";
+            let AdditionalFact = "I don't know what means additional Facts";
+            let Hostinformation = "UserID";
+            let Review = "Average of Review score"
+
+                    var currentGym = db.collection("gyms").doc("test")
+                    //get the document for current user.
+                    currentGym.get()
+                        .then(gymDoc => {
+                            db.collection("gyms").add({
+                                Address: Address,
+                                GymName: GymName,
+                                gymID: gymId,
+                                GymEquipment: GymEquipment,
+                                Size: Size,
+                                AdditionalFact: AdditionalFact,
+                                Hostinformation: Hostinformation,
+                                Review: Review
+                            });
+                        })
+        }
+
     </script>
 </body>
 
