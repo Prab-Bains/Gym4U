@@ -121,3 +121,8 @@ a:visited{
     width: 100px;
     height: 100px;
 }
+
+
+#appointment_body {
+    font-size: 24px;
+}
