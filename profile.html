@@ -21,7 +21,8 @@
     <!-- navbar-light bg-secondary -->
     <nav id="top_nav" class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a href="login.html"><img src="./images/logo_without_text.png" class="img-fluid" alt="logo" style="width: 50px; height: 50px;"></a>
+            <a href="main.html"><img src="./images/logo_without_text.png" class="img-fluid" alt="logo"
+                    style="width: 50px; height: 50px;"></a>
 
             <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
                 aria-controls="offcanvasRight">&#9776;</button>
@@ -37,7 +38,7 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><a href="profile.html">Profile</a></li>
                             <li class="list-group-item"><a href="listings.html">Listings</a></li>
-                            <li class="list-group-item"><a href="settings.html">Settings</a></li>
+                            <li class="list-group-item"><a href="help.html">Help</a></li>
                         </ul>
                     </div>
                 </div>
@@ -45,7 +46,30 @@
         </div>
     </nav>
 
-
+    <div class="container">
+        <h1>User Profile </h1>
+        <form>
+            <fieldset class="mb-3" id="personalInfoFields" disabled>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="nameInput" class="form-control" placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label>School</label>
+                    <input type="text" id="emailInput" class="form-control" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label>City</label>
+                    <input type="text" id="cityInput" class="form-control" placeholder="Enter your city">
+                </div>
+            </fieldset>
+            <div class="d-flex justify-content-end mt-5">
+                <button type="button" class="btn btn-secondary" onclick="editUserInfo()">Edit</button>
+                <span style="width: 10px"></span>
+                <button type="button" class="btn btn-info" onclick="saveUserInfo()">Save</button>
+            </div>
+        </form>
+    </div>
 
     <footer id="bottom_nav" class="navbar justify-content-evenly fixed-bottom">
         <div class="container py-1">
@@ -77,12 +101,67 @@
 
 
 <script>
-    function move_to_signup() {
-        var link = 'signup.html'
-        location.replace(link);
+    var currentUser
+
+    function populateInfo() {
+        firebase.auth().onAuthStateChanged(user => {
+            // Check if user is signed in:
+            if (user) {
+
+                //go to the correct user document by referencing to the user uid
+                currentUser = db.collection("users").doc(user.uid)
+                //get the document for current user.
+                currentUser.get()
+                    .then(userDoc => {
+                        //get the data fields of the user
+                        var userName = userDoc.data().name;
+                        console.log(userName);
+                        var userEmail = userDoc.data().email;
+                        var userCity = userDoc.data().city;
+
+                        //if the data fields are not empty, then write them in to the form.
+                        if (userName != null) {
+                            document.getElementById("nameInput").value = userName;
+                        }
+                        if (userSchool != null) {
+                            document.getElementById("emailInput").value = userEmail;
+                        }
+                        if (userCity != null) {
+                            document.getElementById("cityInput").value = userCity;
+                        }
+                    })
+            } else {
+                // No user is signed in.
+                console.log("No user is signed in");
+            }
+        });
     }
-    function move_to_login() {
-        var link = 'login.html'
-        location.replace(link);
+
+    //call the function to run it
+    populateInfo();
+
+    function editUserInfo() {
+        //Enable the form fields
+        document.getElementById('personalInfoFields').disabled = false;
+    }
+
+    function saveUserInfo() {
+        //console.log("Save is clicked")
+        //grab info that user input in each field
+        userName = document.getElementById('nameInput').value;       //get the value of the field with id="nameInput"
+        userEmail = document.getElementById('emailInput').value;     //get the value of the field with id="emailInput"
+        userCity = document.getElementById('cityInput').value;       //get the value of the field with id="cityInput"
+
+        //write  the values in the database:
+        currentUser.update({
+            name: userName,
+            email: useremail,
+            city: userCity
+        })
+            .then(() => {
+                console.log("Document successfully updated!");
+            })
+        document.getElementById('personalInfoFields').disabled = true;
+
     }
 </script>
