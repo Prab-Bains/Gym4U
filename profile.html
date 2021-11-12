@@ -51,6 +51,7 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><a href="profile.html">Profile</a></li>
                             <li class="list-group-item"><a href="listings.html">Listings</a></li>
+                            <li class="list-group-item"><a href="appointments.html">Appointments</a></li>
                             <li class="list-group-item"><a href="help.html">Help</a></li>
                         </ul>
                     </div>
@@ -69,6 +70,11 @@
                 </div>
                 <br />
                 <div class="form-group">
+                <label for="birthday">Birthday:</label>
+                <input type="date" id="birthdayInput" name="birthday">
+                </div>
+                <br />
+                <div class="form-group">
                     <label>Email</label>
                     <input type="text" id="emailInput" class="form-control" placeholder="Enter your email">
                 </div>
@@ -78,6 +84,8 @@
                     <input type="text" id="cityInput" class="form-control" placeholder="Enter your city">
                 </div>
                 <br />
+
+
                 Let us know how you'd like to browse our webapp:
                 <br />
                 <div class="form-check form-check-inline">
@@ -99,10 +107,17 @@
 
     <footer id="bottom_nav" class="navbar justify-content-evenly fixed-bottom">
         <div class="container py-1">
-            <h5>Terms and Conditions</h5>
+            <h5 style="text-align: center;">Terms and Conditions</h5>
         </div>
 
     </footer>
+
+
+      <!-- Option 1: Bootstrap Bundle with Popper -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+
+  </script>
 
     <script>
         var currentUser
@@ -145,6 +160,7 @@
                             //get the data fields of the user
                             var userName = userDoc.data().name;
                             console.log(userName);
+                            var userBirthday = userDoc.data().userBirthday;
                             var userEmail = userDoc.data().email;
                             var userCity = userDoc.data().city;
                             var userType = userDoc.data().usertype;
@@ -152,6 +168,9 @@
                             //if the data fields are not empty, then write them in to the form.
                             if (userName != null) {
                                 document.getElementById("nameInput").value = userName;
+                            }
+                            if (userBirthday != null) {
+                                document.getElementById("birthdayInput").value = userBirthday;
                             }
                             if (userEmail != null) {
                                 document.getElementById("emailInput").value = userEmail;
@@ -181,8 +200,9 @@
         function saveUserInfo() {
             //console.log("Save is clicked")
             //grab info that user input in each field
-            userName = document.getElementById('nameInput').value;       //get the value of the field with id="nameInput"
-            userEmail = document.getElementById('emailInput').value;     //get the value of the field with id="schoolInput"
+            userName = document.getElementById('nameInput').value;
+            userBirthday = document.getElementById('birthdayInput').value;
+            userEmail = document.getElementById('emailInput').value;
             userCity = document.getElementById('cityInput').value;
             userType = document.querySelector('input[name="userType"]:checked').value;
 
@@ -190,6 +210,7 @@
             //write the values in the database:
             currentUser.update({
                 name: userName,
+                birthday: userBirthday,
                 email: userEmail,
                 city: userCity,
                 type: userType
