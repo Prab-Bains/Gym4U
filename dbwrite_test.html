@@ -34,82 +34,82 @@
 
 <body>
 
-    <button type="button" class="btn btn-lg px-4 gap-3" onClick="writePaymentInfo()">Write Payment Data to DB</button>
-    <button type="button" class="btn btn-lg px-4 gap-3" onClick="writeUserInfo()">Write User Data to DB</button> 
+    <!-- <button type="button" class="btn btn-lg px-4 gap-3" onClick="writePaymentInfo()">Write Payment Data to DB</button>
+    <button type="button" class="btn btn-lg px-4 gap-3" onClick="writeUserInfo()">Write User Data to DB</button>  -->
     <button type="button" class="btn btn-lg px-4 gap-3" onClick="writeGymInfo()">Write Gym Data to DB</button> 
 
     <script>
-        function writePaymentInfo() {
-            console.log("in")
-            let Title = "Test_title";
-            let Level = 3;
-            let Season = "Fall";
-            let Description = "Is this work?";
-            let Flooded = "A";
-            let Scrambled = "B";
-            let uid = "aaa"
-            console.log(Title, Level, Season, Description, Flooded, Scrambled);
+        // function writePaymentInfo() {
+        //     console.log("in")
+        //     let Title = "Test_title";
+        //     let Level = 3;
+        //     let Season = "Fall";
+        //     let Description = "Is this work?";
+        //     let Flooded = "A";
+        //     let Scrambled = "B";
+        //     let uid = "aaa"
+        //     console.log(Title, Level, Season, Description, Flooded, Scrambled);
 
 
-            firebase.auth().onAuthStateChanged(user => {
-                if (user) {
-                    var currentUser = db.collection("users").doc(uid)
-                    var userID = user.uid;
-                    //get the document for current user.
-                    currentUser.get()
-                        .then(userDoc => {
-                            db.collection("Reviews").add({
-                                UserID: userID,
-                                Title: Title,
-                                Level: Level,
-                                Season: Season,
-                                Description: Description,
-                                Flooded: Flooded,
-                                Scrambled: Scrambled
+        //     firebase.auth().onAuthStateChanged(user => {
+        //         if (user) {
+        //             var currentUser = db.collection("users").doc(uid)
+        //             var userID = user.uid;
+        //             //get the document for current user.
+        //             currentUser.get()
+        //                 .then(userDoc => {
+        //                     db.collection("Reviews").add({
+        //                         UserID: userID,
+        //                         Title: Title,
+        //                         Level: Level,
+        //                         Season: Season,
+        //                         Description: Description,
+        //                         Flooded: Flooded,
+        //                         Scrambled: Scrambled
 
-                            });
-                        })
-                } else {
-                    // No user is signed in.
-                }
-            });
-        }
+        //                     });
+        //                 })
+        //         } else {
+        //             // No user is signed in.
+        //         }
+        //     });
+        // }
 
-        function writeUserInfo() {
-            console.log("in")
-            let Title = "Test_title";
-            let Level = 3;
-            let Season = "Fall";
-            let Description = "Is this work?";
-            let Flooded = "A";
-            let Scrambled = "B";
-            let uid = "aaa"
-            console.log(Title, Level, Season, Description, Flooded, Scrambled);
+        // function writeUserInfo() {
+        //     console.log("in")
+        //     let Title = "Test_title";
+        //     let Level = 3;
+        //     let Season = "Fall";
+        //     let Description = "Is this work?";
+        //     let Flooded = "A";
+        //     let Scrambled = "B";
+        //     let uid = "aaa"
+        //     console.log(Title, Level, Season, Description, Flooded, Scrambled);
 
 
-            firebase.auth().onAuthStateChanged(user => {
-                if (user) {
-                    var currentUser = db.collection("users").doc(uid)
-                    var userID = user.uid;
-                    //get the document for current user.
-                    currentUser.get()
-                        .then(userDoc => {
-                            db.collection("Reviews").add({
-                                UserID: userID,
-                                Title: Title,
-                                Level: Level,
-                                Season: Season,
-                                Description: Description,
-                                Flooded: Flooded,
-                                Scrambled: Scrambled
+        //     firebase.auth().onAuthStateChanged(user => {
+        //         if (user) {
+        //             var currentUser = db.collection("users").doc(uid)
+        //             var userID = user.uid;
+        //             //get the document for current user.
+        //             currentUser.get()
+        //                 .then(userDoc => {
+        //                     db.collection("Reviews").add({
+        //                         UserID: userID,
+        //                         Title: Title,
+        //                         Level: Level,
+        //                         Season: Season,
+        //                         Description: Description,
+        //                         Flooded: Flooded,
+        //                         Scrambled: Scrambled
 
-                            });
-                        })
-                } else {
-                    // No user is signed in.
-                }
-            });
-        }
+        //                     });
+        //                 })
+        //         } else {
+        //             // No user is signed in.
+        //         }
+        //     });
+        // }
 
         function writeGymInfo() {
             let Address = "13213-311 Bcit dr";
