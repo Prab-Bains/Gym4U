@@ -13,6 +13,19 @@
     <!-- Our Own CSS-->
     <link rel="stylesheet" type="text/css" href="./styles/my_style.css">
 
+    <!-- Firebase 8 CDNs-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+        </script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+
+    <!-- Link to the api keys for your firebase project -->
+    <script src="scripts/firebaseAPI_DTC11.js"></script>
+
     <title>Gym4U</title>
 </head>
 
@@ -47,7 +60,7 @@
     </nav>
 
     <div class="container">
-        <h1>User Profile </h1>
+        <h1><span id="name-goes-here"></span>'s Profile </h1>
         <form>
             <fieldset class="mb-3" id="personalInfoFields" disabled>
                 <div class="form-group">
@@ -55,12 +68,23 @@
                     <input type="text" id="nameInput" class="form-control" placeholder="Enter your full name">
                 </div>
                 <div class="form-group">
-                    <label>School</label>
+                    <label>Email</label>
                     <input type="text" id="emailInput" class="form-control" placeholder="Enter your email">
                 </div>
                 <div class="form-group">
                     <label>City</label>
                     <input type="text" id="cityInput" class="form-control" placeholder="Enter your city">
+                </div>
+                <br />
+                Let us know how you'd like to browse our webapp:
+                <br />
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="userType" value="Host">
+                    <label>Host</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="userType" value="Guest" checked="checked">
+                    <label>Guest</label>
                 </div>
             </fieldset>
             <div class="d-flex justify-content-end mt-5">
@@ -73,35 +97,38 @@
 
     <footer id="bottom_nav" class="navbar justify-content-evenly fixed-bottom">
         <div class="container py-1">
-            <h5>Help</h5>
             <h5>Terms and Conditions</h5>
-            <h5>FAQ</h5>
         </div>
 
     </footer>
 
-
-
-
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-        </script>
-
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-    -->
-</body>
-
-</html>
-
-
 <script>
     var currentUser
+
+    function insertName() {
+        firebase.auth().onAuthStateChanged(user => {
+            // Check if user is signed in:
+            if (user) {
+                // Do something for the current logged-in user here:
+                console.log(user.uid);
+                //go to the correct user document by referencing to the user uid
+                currentUser = db.collection("users").doc(user.uid);
+                //get the document for current user.
+                currentUser.get()
+                    .then(userDoc => {
+                        var userName = userDoc.data().name;
+                        console.log(userName);
+                        //method #1:  insert with html only
+                        //document.getElementById("name-goes-here").innerText = n;    //using javascript
+                        //method #2:  insert using jquery
+                        $("#name-goes-here").text(userName);                         //using jquery
+                    })
+            } else {
+                // No user is signed in.
+            }
+        });
+    }
+    insertName();
 
     function populateInfo() {
         firebase.auth().onAuthStateChanged(user => {
@@ -118,16 +145,20 @@
                         console.log(userName);
                         var userEmail = userDoc.data().email;
                         var userCity = userDoc.data().city;
+                        var userType = userDoc.data().usertype;
 
                         //if the data fields are not empty, then write them in to the form.
                         if (userName != null) {
                             document.getElementById("nameInput").value = userName;
                         }
-                        if (userSchool != null) {
+                        if (userEmail != null) {
                             document.getElementById("emailInput").value = userEmail;
                         }
                         if (userCity != null) {
                             document.getElementById("cityInput").value = userCity;
+                        }
+                        if (userType != null) {
+                            document.querySelector('input[name="userType"]:checked').value = userType;
                         }
                     })
             } else {
@@ -149,14 +180,17 @@
         //console.log("Save is clicked")
         //grab info that user input in each field
         userName = document.getElementById('nameInput').value;       //get the value of the field with id="nameInput"
-        userEmail = document.getElementById('emailInput').value;     //get the value of the field with id="emailInput"
-        userCity = document.getElementById('cityInput').value;       //get the value of the field with id="cityInput"
+        userEmail = document.getElementById('emailInput').value;     //get the value of the field with id="schoolInput"
+        userCity = document.getElementById('cityInput').value;
+        userType = document.querySelector('input[name="userType"]:checked').value;
 
-        //write  the values in the database:
+        //console.log("Values are:", userName, userSchool, UserCity)
+        //write the values in the database:
         currentUser.update({
             name: userName,
-            email: useremail,
-            city: userCity
+            email: userEmail,
+            city: userCity,
+            type: userType
         })
             .then(() => {
                 console.log("Document successfully updated!");
@@ -165,3 +199,7 @@
 
     }
 </script>
+
+</body>
+
+</html>
