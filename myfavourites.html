@@ -51,7 +51,6 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><a href="profile.html">Profile</a></li>
                             <li class="list-group-item"><a href="listings.html">Listings</a></li>
-                            <li class="list-group-item"><a href="appointments.html">Appointments</a></li>
                             <li class="list-group-item"><a href="help.html">Help</a></li>
                         </ul>
                     </div>
@@ -64,7 +63,41 @@
         <h1 class="display-5 fw-bold">Locations Near You</h1>
     </div>
 
+
+    <!-- <div class="card-group">
+        <div class="card">
+            <img src="https://www.rollingstone.com/wp-content/uploads/2020/07/homegym.png?resize=1800,1200&w=1800"
+                class="card-img-top" alt="..." height="50%">
+            <div class="card-body">
+                <h5 class="card-title">James' Gym</h5>
+                <p class="card-text">I have plenty of room, with a great view. Perfect for you to get your day started
+                    on the right foot.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://images.squarespace-cdn.com/content/v1/555e710ee4b05b4a67f3db31/1590425038018-CBHVRF3UFUJB69GAMMF3/Home-gym-how-to.jpg?format=1000w"
+                class="card-img-top" alt="..." height="50%">
+            <div class="card-body">
+                <h5 class="card-title">Josh's Gym</h5>
+                <p class="card-text">My gym has everything you need for your workout and more. I am also willing to
+                    personally train you if you like.</p>
+                <p class="card-text"><small class="text-muted">Last updated 5 mins ago</small></p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://paleomg.com/wp-content/uploads/2020/09/EN0A0029-1024x683.jpg" class="card-img-top"
+                alt="..." height="50%">
+            <div class="card-body">
+                <h5 class="card-title">Jenna's Gym</h5>
+                <p class="card-text">Gym has easy access to my front yard if you woud like to do any cardio. Also has
+                    many dumbbells.</p>
+                <p class="card-text"><small class="text-muted">Last updated 1 mins ago</small></p>
+            </div>
+        </div>
+    </div> -->
     <div class="listings">
+
         <template id="hikeCardTemplate">
             <div class="card">
                 <img class="card-img-top">
@@ -72,12 +105,11 @@
                 <div class="card-body">
                     <h5 class="card-title">placeholder</h5>
                     <p class="card-address">placeholder</p>
-                    <a href="review.html" class="link-primary">Write a review</a>
+                    <a href="" class="link-primary">Write a review</a>
                     <br>
                     <p class="card-text">This card has supporting text below as a natural lead-in to additional content.
                     </p>
-                    <a href="#" class="btn btn-primary" onclick="setGymData('Iron Paradise')" style="float: right"> Read
-                        more</a>
+                    <a href="#" class="btn btn-primary" style="float: right">Read more</a>
                 </div>
             </div>
         </template>
@@ -116,10 +148,29 @@
 
 
     <script>
-        function move_to_gym_overview() {
-            var link = 'gymOverview.html'
-            location.replace(link);
-        }
+        // function writeGyms() {
+        //     //define a variable for the collection you want to create in Firestore to populate data
+        //     var gymsRef = db.collection("gyms");
+
+        //     db.collection("gyms")({
+        //         code: "img1",
+        //         name: "James' Gym", //replace with your own city?
+        //         address: '12345 ABC Street',
+        //         description: "I have plenty of room, with a great view. Perfect for you to get your day started on the right foot."
+        //     });
+        //     gymsRef.add({
+        //         code: "img2",
+        //         name: "Josh's Gym", //replace with your own city?
+        //         address: '24689 ABC Street',
+        //         description: "My gym has everything you need for your workout and more. I am also willing to personally train you if you like."
+        //     });
+        //     gymsRef.add({
+        //         code: "img3",
+        //         name: "Jenna's Gym", //replace with your own city?
+        //         address: '12456 ABC Street',
+        //         description: "Gym has easy access to my front yard if you woud like to do any cardio. Also has many dumbbells."
+        //     });
+        // }
 
         function displayGyms() {
             let hikeCardTemplate = document.getElementById("hikeCardTemplate");
@@ -146,13 +197,6 @@
                 })
         }
         displayGyms();
-
-        function setGymData(id) {    
-            localStorage.setItem('gymID', id);
-            move_to_gym_overview()
-            console.log(id)
-            console.log("clicked")
-        }
     </script>
 
 </body>

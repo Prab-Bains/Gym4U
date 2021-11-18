@@ -133,11 +133,8 @@ a:visited {
 #gymOverview {
     padding-left: 5%;
     padding-right: 5%;
-    
 }
 
-/* #gymOverviewImg {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-} */
+#appointment_body {
+    font-size: 24px;
+}
