@@ -1,54 +1,57 @@
-body{
+body {
     background-color: black;
     color: white;
+
 }
 
-#top_nav{
+
+
+#top_nav {
     border-bottom: 3px solid #00e6d0;
 }
 
 
-.signup-input{
-    display:inline-block;
+.signup-input {
+    display: inline-block;
     text-align: left;
 }
 
-#bottom_nav{
+#bottom_nav {
     border-top: 3px solid #00e6d0;
     background-color: black;
 }
 
-#background_image{
+#background_image {
     width: 40%;
     border: 3px solid #00e6d0;
 }
 
 
-.btn{
+.btn {
     background-color: #00e6d0;
 }
 
-.btn:hover{
+.btn:hover {
     background-color: black;
     color: white;
     border: white;
 }
 
-.offcanvas{
+.offcanvas {
     background-color: black;
     border: 5px solid #00e6d0;
 }
 
-.btn-close{
+.btn-close {
     background-color: #00e6d0;
 }
 
-.list-group-item{
+.list-group-item {
     background-color: #00e6d0;
     border: solid black;
 }
 
-.login_body{
+.login_body {
     background-color: black;
 }
 
@@ -64,13 +67,14 @@ body{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color : #00e6d0;
+    color: #00e6d0;
 }
 
 .sign-image {
 
     vertical-align: middle;
 }
+
 h1 {
     font-size: 250%;
     font-weight: bold;
@@ -82,46 +86,54 @@ h1 {
     word-spacing: 3px;
 }
 
-a:link{
+a:link {
     color: white;
     text-decoration: none;
 }
 
-a:hover{
+a:hover {
     color: #00e6d0;
 }
 
-a:visited{
+a:visited {
     color: white;
 }
 
-.card-title{
+.card-title {
     color: white;
 }
 
-.card-text{
+.card-text {
     color: white;
 }
 
-.card{
+.card {
     background-color: black;
     margin: 20px;
 }
 
-.helpText{
+.helpText {
     padding-left: 5%;
     padding-right: 5%;
 }
 
-.helpText > p{
+.helpText>p {
     font-size: 24px;
 }
 
-#hikeCardTemplate > img{
+#hikeCardTemplate>img {
     width: 100px;
     height: 100px;
 }
 
+#gymOverviewTitle {
+    text-align: center;
+}
+
+#gymOverview {
+    padding-left: 5%;
+    padding-right: 5%;
+}
 
 #appointment_body {
     font-size: 24px;

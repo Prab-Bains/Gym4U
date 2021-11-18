@@ -31,7 +31,6 @@
 
 
 <body>
-    <!-- navbar-light bg-secondary -->
     <nav id="top_nav" class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <a href="login.html"><img src="./images/logo_without_text.png" class="img-fluid" alt="logo"
@@ -51,8 +50,7 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><a href="profile.html">Profile</a></li>
                             <li class="list-group-item"><a href="listings.html">Listings</a></li>
-                            <li class="list-group-item"><a href="appointments.html">Appointments</a></li>
-                            <li class="list-group-item"><a href="help.html">Help</a></li>
+                            <li class="list-group-item"><a href="#">Help</a></li>
                         </ul>
                     </div>
                 </div>
@@ -60,38 +58,45 @@
         </div>
     </nav>
 
-    <div class="px-4 py-5 my-5 text-center">
-        <h1 class="display-5 fw-bold">Locations Near You</h1>
+    <h1 id="gymOverviewTitle"><span id="GymName"></span></h1>
+    <br>
+
+    <div id="gymOverview">
+        <img id="#gymOverviewImg" src="/images/img3.jpg" alt="Gym Images" width="95%" height="500px">
+
+        <h3><br>Description</h3>
+        <p id="description">My gym has everything you need for your workout and more. I am also willing to personally train you if you like.</p>
+
+        <h3>What's Included</h3>
+        <ul>
+            <li id="item1">Power-rack</li>
+            <li id="item2">Dumbbells</li>
+            <li id="item3">Bench</li>
+            <li id="item4">Treadmill</li>
+        </ul>
+
+        <h3>Reviews</h3>
+        <ul>
+            <li id="review1">This is a great place to workout. Lots of equipment and very spacious.</li>
+            <li id="review2">Lots of equipment, however some equipment is partially damaged.</li>
+            <li id="review3">Very clean. Great gym.</li>
+            <li id="review4">Owner is really nice and helped train me. 5/5</li>
+        </ul>
+        <br>
+
+        <a href="review.html" class="link-primary">Write a review</a>
+
+        <br><br>
+
     </div>
 
-    <div class="listings">
-        <template id="hikeCardTemplate">
-            <div class="card">
-                <img class="card-img-top">
-                <img class="card-img-top width=100px height=100px">
-                <div class="card-body">
-                    <h5 class="card-title">placeholder</h5>
-                    <p class="card-address">placeholder</p>
-                    <a href="review.html" class="link-primary">Write a review</a>
-                    <br>
-                    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.
-                    </p>
-                    <a href="#" class="btn btn-primary" onclick="setGymData('Iron Paradise')" style="float: right"> Read
-                        more</a>
-                </div>
-            </div>
-        </template>
-
-        <div class="container">
-            <div class="card-group" id="hikeCardGroup">
-            </div>
-        </div>
-    </div>
 
 
     <footer id="bottom_nav" class="navbar justify-content-evenly">
         <div class="container py-1">
+            <h5>Help</h5>
             <h5>Terms and Conditions</h5>
+            <h5>FAQ</h5>
         </div>
 
     </footer>
@@ -104,7 +109,6 @@
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-
     </script>
 
     <!-- Option 2: Separate Popper and Bootstrap JS -->
@@ -112,49 +116,44 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     -->
-
-
-
-    <script>
-        function move_to_gym_overview() {
-            var link = 'gymOverview.html'
-            location.replace(link);
-        }
-
-        function displayGyms() {
-            let hikeCardTemplate = document.getElementById("hikeCardTemplate");
-            let hikeCardGroup = document.getElementById("hikeCardGroup");
-
-            db.collection("gyms").get()
-                .then(allGyms => {
-                    allGyms.forEach(doc => {
-                        var gymName = doc.data().name; //gets the name field
-                        var gymID = doc.data().image; //gets the unique ID field
-                        var gymAddress = doc.data().address;
-                        var gymDescription = doc.data().description; //gets the length field
-
-
-                        let testHikeCard = hikeCardTemplate.content.cloneNode(true);
-                        testHikeCard.querySelector('.card-title').innerHTML = gymName;
-                        testHikeCard.querySelector('.card-address').innerHTML = gymAddress;
-                        testHikeCard.querySelector('.card-text').innerHTML = gymDescription;
-                        testHikeCard.querySelector('a').onclick = () => setHikeData(gymID);
-                        testHikeCard.querySelector('img').src = `./images/${gymID}.jpg`;
-                        hikeCardGroup.appendChild(testHikeCard);
-                    })
-
-                })
-        }
-        displayGyms();
-
-        function setGymData(id) {    
-            localStorage.setItem('gymID', id);
-            move_to_gym_overview()
-            console.log(id)
-            console.log("clicked")
-        }
-    </script>
-
 </body>
 
 </html>
+
+
+<script>
+    let gymID = localStorage.getItem("gymID");
+    console.log(gymID)
+
+    db.collection("gyms").where("name", "==", gymID)
+        .get()
+        .then(querygyms => {
+            //see how many results you have got from the query
+            size = querygyms.size;
+            // get the documents of query
+            Gyms = querygyms.docs;
+
+            // We want to have one document per hike, so if the the result of 
+            //the query is more than one, we can check it right now and clean the DB if needed.
+            if (size = 1) {
+                var thisGym = Gyms[0].data();
+                name = thisGym.name;
+                document.getElementById("GymName").innerHTML = name;
+            } else {
+                console.log("Query has more than one data")
+            }
+        })
+        .catch((error) => {
+            console.log("Error getting documents: ", error);
+        });
+
+    // function move_to_signup() {
+    //     var link = 'signup.html'
+    //     location.replace(link);
+    // }
+
+    // function move_to_login() {
+    //     var link = 'login.html'
+    //     location.replace(link);
+    // }
+</script>
