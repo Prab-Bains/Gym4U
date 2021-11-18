@@ -72,7 +72,7 @@
         <input id="email_address" name="new_email" type="text"><br>
         <label class="label">Password</label>
         <input id="passwd" type="password" class="input" data-type="password"><br>
-        <button id="login_button" onClick="login()">Login</button>
+        <button id="login_button" onClick="login(move_page)">Login</button>
         <p text-align="center">Don't have a profile? <a href="signup.html">Sign up!</a></p>
     </div>
 
@@ -89,30 +89,37 @@
 
     <script>
 
-        
 
-        function login() {
+        function move_page() {
+            location.replace('appointments.html')
+        }
+
+
+        function login(call_back) {
             let email = document.getElementById("email_address").value;
             let password = document.getElementById("passwd").value;
-            var link = 'appointments.html'
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Signed in
+                    var user = userCredential.user
+                    var uid = user.uid
+                    console.log(user.uid);
+                    localStorage.setItem("uid", uid)
 
-
-                firebase.auth().signInWithEmailAndPassword(email, password)
-                    .then((userCredential) => {
-                        // Signed in
-                        var user = userCredential.user
-                        console.log(user.uid);
-                        localStorage.setItem("uid", user.uid)
-                        location.replace(link)
-                        
-
-                    })
-                    .catch((error) => {
-                        var errorCode = error.code;
-                        var errorMessage = error.message;
-                        alert('Error Code:' + errorCode + '\n' + 'Error Message:' + error.message);
-                        // ..
-                    });
+                    db.collection("users").doc(uid).get()
+                        .then(userDoc => {
+                            var username = userDoc.data().userName;
+                            alert(username);
+                            localStorage.setItem("userName", username)
+                        });
+                })
+                .catch((error) => {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    alert('Error Code:' + errorCode + '\n' + 'Error Message:' + error.message);
+                    // ..
+                });
+            call_back();
         }
     </script>
 

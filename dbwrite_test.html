@@ -50,7 +50,7 @@
     <input id="input_Hostinformation" name="input_Review" type="text"><br>
 
 
-    <button type="button" class="btn btn-lg px-4 gap-3" onClick="writeGymInfo()">Write Gym Data to DB</button> 
+    <button type="button" class="btn btn-lg px-4 gap-3" onClick="writeGymInfo()">Write Gym Data to DB</button>
 
     <script>
 
@@ -63,22 +63,32 @@
             let AdditionalFact = document.getElementById("input_AdditionalFact").value;
             let Hostinformation = document.getElementById("input_Hostinformation").value;
 
-                    var currentGym = db.collection("gyms").doc("test")
-                    //get the document for current user.
-                    currentGym.get()
-                        .then(gymDoc => {
-                            db.collection("gyms").add({
-                                Address: Address,
-                                GymName: GymName,
-                                gymID: gymId,
-                                GymEquipment: GymEquipment,
-                                Size: Size,
-                                AdditionalFact: AdditionalFact,
-                                Hostinformation: Hostinformation,
-                            });
-                        })
+            var currentGym = db.collection("gyms").doc("test")
+            //get the document for current user.
+            currentGym.get()
+                .then(gymDoc => {
+                    db.collection("gyms").add({
+                        Address: Address,
+                        GymName: GymName,
+                        gymID: gymId,
+                        GymEquipment: GymEquipment,
+                        Size: Size,
+                        AdditionalFact: AdditionalFact,
+                        Hostinformation: Hostinformation,
+                    });
+                })
         }
 
+
+        let map;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: -34.397, lng: 150.644 },
+                zoom: 8,
+            });
+        }
+        initMap();
     </script>
 </body>
 

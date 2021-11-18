@@ -10,8 +10,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <!-- Our Own CSS-->
-    <link rel="stylesheet" type="text/css" href="./styles/my_style.css">
+    <!-- Firebase CSS -->
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
 
     <!-- Firebase 8 CDNs-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -23,12 +23,14 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
 
-    <!-- Link to the api keys for your firebase project -->
-    <script src="./scripts/firebaseAPI_DTC11.js"></script>
 
+    <!-- Link to the api keys for your firebase project -->
+    <script src="scripts/firebaseAPI_DTC11.js"></script>
+
+    <!-- Our Own CSS-->
+    <link rel="stylesheet" type="text/css" href="./styles/my_style.css">
     <title>Gym4U</title>
 </head>
-
 
 <body>
     <!-- navbar-light bg-secondary -->
@@ -59,135 +61,10 @@
             </div>
         </div>
     </nav>
+    <button 
 
-    <div class="px-4 py-5 my-5 text-center">
-        <h1 class="display-5 fw-bold">Upcoming Appoinment!!</h1>
+    <div class="appointment_container" style="text-align: center;">
     </div>
-
-
-    <!-- <div class="card-group">
-        <div class="card">
-            <img src="https://www.rollingstone.com/wp-content/uploads/2020/07/homegym.png?resize=1800,1200&w=1800"
-                class="card-img-top" alt="..." height="50%">
-            <div class="card-body">
-                <h5 class="card-title">James' Gym</h5>
-                <p class="card-text">I have plenty of room, with a great view. Perfect for you to get your day started
-                    on the right foot.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-            </div>
-        </div>
-        <div class="card">
-            <img src="https://images.squarespace-cdn.com/content/v1/555e710ee4b05b4a67f3db31/1590425038018-CBHVRF3UFUJB69GAMMF3/Home-gym-how-to.jpg?format=1000w"
-                class="card-img-top" alt="..." height="50%">
-            <div class="card-body">
-                <h5 class="card-title">Josh's Gym</h5>
-                <p class="card-text">My gym has everything you need for your workout and more. I am also willing to
-                    personally train you if you like.</p>
-                <p class="card-text"><small class="text-muted">Last updated 5 mins ago</small></p>
-            </div>
-        </div>
-        <div class="card">
-            <img src="https://paleomg.com/wp-content/uploads/2020/09/EN0A0029-1024x683.jpg" class="card-img-top"
-                alt="..." height="50%">
-            <div class="card-body">
-                <h5 class="card-title">Jenna's Gym</h5>
-                <p class="card-text">Gym has easy access to my front yard if you woud like to do any cardio. Also has
-                    many dumbbells.</p>
-                <p class="card-text"><small class="text-muted">Last updated 1 mins ago</small></p>
-            </div>
-        </div>
-    </div> -->
-    <div class="px-4 py-5 my-5 text-center">
-        <div id="appointment_body">
-            <p id="display_gymName">placeholder</p>
-            <p id="display_from_time">placeholder</p>
-            <p id="display_to_time">placeholder</p>
-            <p id="display_date">placeholder</p>
-        </div>
-        <div class="px-4 py-5 my-5 text-center">
-            <div class="form-floating">
-                <select class="form-select" id="id_gymname" aria-label="Floating label select example">
-                    <option selected>Select one of gyms.</option>
-                    <option value="Aiden's gym">Aiden's gym</option>
-                    <option value="Prab's gym">Prab's gym</option>
-                    <option value="Alissa's gym">Alissa's gym</option>
-                </select>
-                <label for="floatingSelect">Gym list.</label>
-            </div>
-            <label for="appt">Select a Start Time:</label>
-            <input type="time" id="id_from_time" name="appt"><br>
-            <label for="appt">Select a Start Time:</label>
-            <input type="time" id="id_to_time" name="appt"><br>
-            <input type="date" id="id_date" name="appt"><br>
-            <button type="button" class="btn btn-lg px-4 gap-3" onClick="addAppointment()">Update upcoming appointment!</button>
-
-
-
-
-            <!-- <label for="pass" class="label">Time to start</label>
-        <input id="id_from_time" name="input_from_time" type="text"><br>
-        <label for="pass" class="label">Time to finish</label>
-        <input id="id_to_time" name="input_to_time" type="text"><br>
-        <label for="pass" class="label">Date</label>
-        
-        <button type="button" class="btn btn-lg px-4 gap-3" onClick="addAppointment()">Add new appointment!</button>  -->
-
-        </div>
-
-
-        <!-- <table class="table table-light">
-            <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Place</th>
-                  <th scope="col">Time</th>
-                  <th scope="col">Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td colspan="2">Larry the Bird</td>
-                  <td>@twitter</td>
-                </tr>
-              </tbody>
-            
-        </table> -->
-
-        <!-- <template id="hikeCardTemplate">
-            <div class="card">
-                <img class="card-img-top">
-                <img class="card-img-top width=100px height=100px">
-                <div class="card-body">
-                    <h5 class="card-title">placeholder</h5>
-                    <p class="card-address">placeholder</p>
-                    <a href="" class="link-primary">Write a review</a>
-                    <br>
-                    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.
-                    </p>
-                    <a href="#" class="btn btn-primary" style="float: right">Read more</a>
-                </div>
-            </div>
-        </template>
-
-        <div class="container">
-            <div class="card-group" id="hikeCardGroup">
-            </div>
-        </div> -->
-    </div>
-
 
     <footer id="bottom_nav" class="navbar justify-content-evenly fixed-bottom">
         <div class="container py-1">
@@ -195,92 +72,121 @@
             <h5>Terms and Conditions</h5>
             <h5>FAQ</h5>
         </div>
-
     </footer>
 
 
-
-
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-
-        </script>
-
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-    -->
-
-
+    <!-- <button type="button" class="btn btn-lg px-4 gap-3" onClick="AddAppointmentInfo()">Write appointment Data to DB</button> -->
 
     <script>
-        // function writeGyms() {
-        //     //define a variable for the collection you want to create in Firestore to populate data
-        //     var gymsRef = db.collection("gyms");
-        //     db.collection("gyms")({
-        //         code: "img1",
-        //         name: "James' Gym", //replace with your own city?
-        //         address: '12345 ABC Street',
-        //         description: "I have plenty of room, with a great view. Perfect for you to get your day started on the right foot."
-        //     });
-        //     gymsRef.add({
-        //         code: "img2",
-        //         name: "Josh's Gym", //replace with your own city?
-        //         address: '24689 ABC Street',
-        //         description: "My gym has everything you need for your workout and more. I am also willing to personally train you if you like."
-        //     });
-        //     gymsRef.add({
-        //         code: "img3",
-        //         name: "Jenna's Gym", //replace with your own city?
-        //         address: '12456 ABC Street',
-        //         description: "Gym has easy access to my front yard if you woud like to do any cardio. Also has many dumbbells."
-        //     });
-        // }
 
-        function displayAppoinment() {
 
-            let uid = localStorage.getItem("uid")
 
-            db.collection("appointment").doc(uid).get()
-                .then(appoinmentDoc => {
-                    var gymname = appoinmentDoc.data().gymname;
-                    var from_time = appoinmentDoc.data().from_time;
-                    var to_time = appoinmentDoc.data().to_time;
-                    var date = appoinmentDoc.data().date;
+        function readAppointmentList() {
+            firebase.auth().onAuthStateChanged(user => {
+                if (user) {
+                    var uid = user.uid
+                    console.log(uid);
+                    var currentDB = db.collection("appointments").doc("sZD5S3Qp3wNqoMH8qnvV")
+                    currentDB.get()
+                        .then(appointmentListdoc => {
+                            var list = appointmentListdoc.data().appointment_list
+                            console.log(list);
+                            for (let i = list.length - 1; i > -1; i--) {
+                                console.log(i);
+                                console.log(list[i]);
+                                console.log(list[i]["date"]);
+                                console.log(list[i]["end_time"]);
+                                console.log(list[i]["start_time"]);
+                                console.log(list[i]["gym_name"]);
 
-                    $("#display_gymName").text(gymname);
-                    $("#display_from_time").text(from_time);
-                    $("#display_to_time").text(to_time);
-                    $("#display_date").text(date);
+                                date = list[i]["date"];
+                                end_time = list[i]["end_time"];
+                                start_time = list[i]["start_time"];
+                                gym_name = list[i]["gym_name"];
+
+                                var containerform =
+                                    `<div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+                                    <div class="card-header">${gym_name}</div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">Date : ${date}</h5>
+                                            <p class="card-text">Start time : ${start_time}</p>
+                                            <p class="card-text">End time : ${end_time}</p>
+                                        </div>
+                                    </div>`;
+                                $(".appointment_container").append(containerform);
+
+                            }
+                        })
+
+                } else {
+                    alert("no user sign-in");
+                }
+            })
+        }
+        readAppointmentList();
+
+
+        function AddAppointmentInfo() {
+            firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                var uid = user.uid
+                let appointment_info_object = [
+                    {
+                        date: "03-NOV-2021",
+                        start_time: "18:00",
+                        end_time: "20:00",
+                        gym_name: "Aiden House gym"
+                    },
+                    {
+                        date: "05-NOV-2021",
+                        start_time: "18:00",
+                        end_time: "20:00",
+                        gym_name: "Aiden House gym"
+                    },
+                    {
+                        date: "09-NOV-2021",
+                        start_time: "18:00",
+                        end_time: "20:00",
+                        gym_name: "Aiden House gym"
+                    },
+                    {
+                        date: "13-NOV-2021",
+                        start_time: "18:00",
+                        end_time: "20:00",
+                        gym_name: "Aiden House gym"
+                    }
+                ]
+                let appointment_info_element = {
+                        date: "13-NOV-2021",
+                        start_time: "18:00",
+                        end_time: "20:00",
+                        gym_name: "Aiden House gym"
+                    }
+                var currentGym = db.collection("appointments").doc("vUcpSA0sNeOdazO7l38fYGYvsdG3").set({
+                    appointment_list: appointment_info_element
                 })
+                .then(() => {
+                    console.log("Add success")
+                })
+                .catch((error) => {
+                    console.log("Error: ", error);
+                })
+                //get the document for current user.
+                // currentGym.get()
+                //     .then(gymDoc => {
+                //         db.collection("appointments").add({
+                //             appointment_list: appointment_info_object
+                //         });
+                //     })
+
+            } else {
+                alert("no user sign-in");
+            }
+        })
         }
-        displayAppoinment();
+        AddAppointmentInfo();
 
-        function addAppointment() {
-
-            let uid = localStorage.getItem("uid")
-            let gymname = document.getElementById("id_gymname").value;
-            let from_time = document.getElementById("id_from_time").value;
-            let to_time = document.getElementById("id_to_time").value;
-            let date = document.getElementById("id_date").value;
-            var currentUserDoc = db.collection("appointment").doc(uid)
-
-            currentUserDoc.update({
-                date: date,
-                from_time: from_time,
-                to_time: to_time,
-                gymname: gymname
-            });
-
-            alert("Success to update information!")
-            displayAppoinment();
-        }
     </script>
-
 </body>
 
 </html>
