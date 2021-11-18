@@ -78,9 +78,6 @@
     <!-- <button type="button" class="btn btn-lg px-4 gap-3" onClick="AddAppointmentInfo()">Write appointment Data to DB</button> -->
 
     <script>
-
-
-
         function readAppointmentList() {
             firebase.auth().onAuthStateChanged(user => {
                 if (user) {
@@ -106,7 +103,7 @@
 
                                 var containerform =
                                     `<div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
-                                    <div class="card-header">${gym_name}</div>
+                                    <div class="card-header" id="card-header${i}">${gym_name}</div>
                                         <div class="card-body">
                                             <h5 class="card-title">Date : ${date}</h5>
                                             <p class="card-text">Start time : ${start_time}</p>
@@ -126,65 +123,65 @@
         readAppointmentList();
 
 
-        function AddAppointmentInfo() {
-            firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                var uid = user.uid
-                let appointment_info_object = [
-                    {
-                        date: "03-NOV-2021",
-                        start_time: "18:00",
-                        end_time: "20:00",
-                        gym_name: "Aiden House gym"
-                    },
-                    {
-                        date: "05-NOV-2021",
-                        start_time: "18:00",
-                        end_time: "20:00",
-                        gym_name: "Aiden House gym"
-                    },
-                    {
-                        date: "09-NOV-2021",
-                        start_time: "18:00",
-                        end_time: "20:00",
-                        gym_name: "Aiden House gym"
-                    },
-                    {
-                        date: "13-NOV-2021",
-                        start_time: "18:00",
-                        end_time: "20:00",
-                        gym_name: "Aiden House gym"
-                    }
-                ]
-                let appointment_info_element = {
-                        date: "13-NOV-2021",
-                        start_time: "18:00",
-                        end_time: "20:00",
-                        gym_name: "Aiden House gym"
-                    }
-                var currentGym = db.collection("appointments").doc("vUcpSA0sNeOdazO7l38fYGYvsdG3").set({
-                    appointment_list: appointment_info_element
-                })
-                .then(() => {
-                    console.log("Add success")
-                })
-                .catch((error) => {
-                    console.log("Error: ", error);
-                })
-                //get the document for current user.
-                // currentGym.get()
-                //     .then(gymDoc => {
-                //         db.collection("appointments").add({
-                //             appointment_list: appointment_info_object
-                //         });
-                //     })
+        // function AddAppointmentInfo() {
+        //     firebase.auth().onAuthStateChanged(user => {
+        //     if (user) {
+        //         var uid = user.uid
+        //         let appointment_info_object = [
+        //             {
+        //                 date: "03-NOV-2021",
+        //                 start_time: "18:00",
+        //                 end_time: "20:00",
+        //                 gym_name: "Aiden House gym"
+        //             },
+        //             {
+        //                 date: "05-NOV-2021",
+        //                 start_time: "18:00",
+        //                 end_time: "20:00",
+        //                 gym_name: "Aiden House gym"
+        //             },
+        //             {
+        //                 date: "09-NOV-2021",
+        //                 start_time: "18:00",
+        //                 end_time: "20:00",
+        //                 gym_name: "Aiden House gym"
+        //             },
+        //             {
+        //                 date: "13-NOV-2021",
+        //                 start_time: "18:00",
+        //                 end_time: "20:00",
+        //                 gym_name: "Aiden House gym"
+        //             }
+        //         ]
+        //         let appointment_info_element = {
+        //                 date: "13-NOV-2021",
+        //                 start_time: "18:00",
+        //                 end_time: "20:00",
+        //                 gym_name: "Aiden House gym"
+        //             }
+        //         var currentGym = db.collection("appointments").doc("vUcpSA0sNeOdazO7l38fYGYvsdG3").set({
+        //             appointment_list: appointment_info_element
+        //         })
+        //         .then(() => {
+        //             console.log("Add success")
+        //         })
+        //         .catch((error) => {
+        //             console.log("Error: ", error);
+        //         })
+        //         //get the document for current user.
+        //         // currentGym.get()
+        //         //     .then(gymDoc => {
+        //         //         db.collection("appointments").add({
+        //         //             appointment_list: appointment_info_object
+        //         //         });
+        //         //     })
 
-            } else {
-                alert("no user sign-in");
-            }
-        })
-        }
-        AddAppointmentInfo();
+        //     } else {
+        //         alert("no user sign-in");
+        //     }
+        // })
+        // }
+        // AddAppointmentInfo();
 
     </script>
 </body>

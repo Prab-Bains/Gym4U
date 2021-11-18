@@ -65,7 +65,7 @@
     </div>
 
     <div class="listings">
-        <template id="hikeCardTemplate">
+        <!-- <template id="hikeCardTemplate">
             <div class="card">
                 <img class="card-img-top">
                 <img class="card-img-top width=100px height=100px">
@@ -76,11 +76,11 @@
                     <br>
                     <p class="card-text">This card has supporting text below as a natural lead-in to additional content.
                     </p>
-                    <a href="#" class="btn btn-primary" onclick="setGymData('Iron Paradise')" style="float: right"> Read
+                    <a href="#" class="btn btn-primary" onclick="setGymData()" style="float: right"> Read
                         more</a>
                 </div>
             </div>
-        </template>
+        </template> -->
 
         <div class="container">
             <div class="card-group" id="hikeCardGroup">
@@ -134,23 +134,48 @@
                         var gymDescription = doc.data().description; //gets the length field
 
 
-                        let testHikeCard = hikeCardTemplate.content.cloneNode(true);
-                        testHikeCard.querySelector('.card-title').innerHTML = gymName;
-                        testHikeCard.querySelector('.card-address').innerHTML = gymAddress;
-                        testHikeCard.querySelector('.card-text').innerHTML = gymDescription;
-                        testHikeCard.querySelector('a').onclick = () => setHikeData(gymID);
-                        testHikeCard.querySelector('img').src = `./images/${gymID}.jpg`;
-                        hikeCardGroup.appendChild(testHikeCard);
+                        // let testHikeCard = hikeCardTemplate.content.cloneNode(true);
+                        // testHikeCard.querySelector('.card-title').innerHTML = gymName;
+                        // testHikeCard.querySelector('.card-address').innerHTML = gymAddress;
+                        // testHikeCard.querySelector('.card-text').innerHTML = gymDescription;
+                        // testHikeCard.querySelector('a').onclick = () => setHikeData(gymID);
+                        // testHikeCard.querySelector('img').src = `./images/${gymID}.jpg`;
+                        // hikeCardGroup.appendChild(testHikeCard);
+
+                        var template_form = 
+                        `<div class="card">
+                                <img class="card-img-top" src="./images/${gymID}.jpg">
+                                <img class="card-img-top width=100px height=100px">
+                                <div class="card-body">
+                                <h5 class="card-title" id="id_${gymName}">${gymName}</h5>
+                                <p class="card-address">${gymAddress}</p>
+                                <p class="link-primary" onclick="gotoReview('${gymName}')">Write a review</a>
+                                <br>
+                                <p class="card-text">${gymDescription}</p>
+                                <a href="#" class="btn btn-primary" onclick="setGymData('${gymName}')" style="float: right"> Read
+                                    more</a>
+                                </div>
+                                </div>`
+                        $(".card-group").append(template_form);
                     })
 
                 })
         }
         displayGyms();
 
-        function setGymData(id) {    
-            localStorage.setItem('gymID', id);
+        function setGymData(gymName) {
+            console.log(gymName)
+            localStorage.setItem('gymID', gymName);
             move_to_gym_overview()
-            console.log(id)
+            // console.log(id)
+            console.log("clicked")
+        }
+
+        function gotoReview(gymName) {
+            console.log(gymName)
+            localStorage.setItem('gymID', gymName);
+            location.replace("review.html")
+            // console.log(id)
             console.log("clicked")
         }
     </script>
