@@ -33,7 +33,7 @@
 <body>
     <nav id="top_nav" class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a href="login.html"><img src="./images/logo_without_text.png" class="img-fluid" alt="logo"
+            <a href="main.html"><img src="./images/logo_without_text.png" class="img-fluid" alt="logo"
                     style="width: 50px; height: 50px;"></a>
 
             <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
@@ -62,26 +62,26 @@
     <br>
 
     <div id="gymOverview">
-        <img id="#gymOverviewImg" src="/images/img3.jpg" alt="Gym Images" width="95%" height="500px">
+        <img src="/images/img3.jpg" alt="Gym Images" width="95%" height="300px">
 
         <h3><br>Description</h3>
-        <p id="description">My gym has everything you need for your workout and more. I am also willing to personally train you if you like.</p>
+        <p id="description"></p>
 
         <h3>What's Included</h3>
-        <ul>
-            <li id="item1">Power-rack</li>
-            <li id="item2">Dumbbells</li>
-            <li id="item3">Bench</li>
-            <li id="item4">Treadmill</li>
+        <ul class="item">
+            <li id="item1"></li>
+            <li id="item2"></li>
+            <li id="item3"></li>
+            <li id="item4"></li>
         </ul>
 
         <h3>Reviews</h3>
-        <ul>
-            <li id="review1">This is a great place to workout. Lots of equipment and very spacious.</li>
-            <li id="review2">Lots of equipment, however some equipment is partially damaged.</li>
-            <li id="review3">Very clean. Great gym.</li>
-            <li id="review4">Owner is really nice and helped train me. 5/5</li>
-        </ul>
+        <div class="listings">
+            <div class="container">
+                <div class="card-group" id="reviews">
+                </div>
+            </div>
+        </div>
         <br>
 
         <a href="review.html" class="link-primary">Write a review</a>
@@ -92,11 +92,9 @@
 
 
 
-    <footer id="bottom_nav" class="navbar justify-content-evenly">
-        <div class="container py-1">
-            <h5>Help</h5>
+    <footer id="bottom_nav">
+        <div>
             <h5>Terms and Conditions</h5>
-            <h5>FAQ</h5>
         </div>
 
     </footer>
@@ -122,10 +120,10 @@
 
 
 <script>
-    let gymID = localStorage.getItem("gymID");
-    console.log(gymID)
+    let gymName = localStorage.getItem("gymName");
+    console.log(gymName)
 
-    db.collection("gyms").where("name", "==", gymID)
+    db.collection("gyms").where("name", "==", gymName)
         .get()
         .then(querygyms => {
             //see how many results you have got from the query
@@ -138,7 +136,19 @@
             if (size = 1) {
                 var thisGym = Gyms[0].data();
                 name = thisGym.name;
+                image = thisGym.image;
+                description = thisGym.description;
+                equipment = thisGym.equipment;
                 document.getElementById("GymName").innerHTML = name;
+                document.getElementById("description").innerHTML = description;
+
+                for (let i = 0; i < equipment.length; i++) {
+                    document.getElementById("item1").innerHTML = equipment[0];
+                    document.getElementById("item2").innerHTML = equipment[1];
+                    document.getElementById("item3").innerHTML = equipment[2];
+                    document.getElementById("item4").innerHTML = equipment[3];
+                }
+
             } else {
                 console.log("Query has more than one data")
             }
@@ -147,13 +157,26 @@
             console.log("Error getting documents: ", error);
         });
 
-    // function move_to_signup() {
-    //     var link = 'signup.html'
-    //     location.replace(link);
-    // }
+    db.collection("Reviews").where("code", "==", gymName)
+        .get()
+        .then(allReviews => {
+            allReviews.forEach(doc => {
+                var title = doc.data().Title; //gets the name field
+                var review = doc.data().Description; //gets the image field
 
-    // function move_to_login() {
-    //     var link = 'login.html'
-    //     location.replace(link);
-    // }
+                var review_form =
+                    `<div class="card">
+                    <div class="card-body">
+                    <h5 class="card-title">${title}</h5>
+                    <br>
+                    <p class="card-text">${review}</p>
+                    </div>
+                    </div>`
+                $(".card-group").append(review_form);
+            })
+
+        })
+        .catch((error) => {
+            console.log("Error getting documents: ", error);
+        });
 </script>
