@@ -60,56 +60,18 @@
     </nav>
 
     <div class="payment-information">
-        <h5>Save Payment Information:</h5>
-        <form>
-            <fieldset class="mb-3" id="personalInfoFields" disabled>
-                <div class="form-group">
-                    <label>Name on Card</label>
-                    <input type="text" id="nameInput" class="form-control" placeholder="Enter your full name">
-                </div>
-                <br />
-                <div class="form-group">
-                    <label for="birthday">Birthday:</label><br />
-                    <input type="date" id="birthdayInput" name="birthday">
-                </div>
-                <br />
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="text" id="emailInput" class="form-control" placeholder="Enter your email">
-                </div>
-                <br />
-                <div class="form-group">
-                    <label>City</label>
-                    <input type="text" id="cityInput" class="form-control" placeholder="Enter your city">
-                </div>
-                <br />
+        <h5>Saved Payment Methods:</h5>
 
 
-                Let us know how you'd like to browse our webapp:
-                <br />
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="userType" value="Host">
-                    <label>Host</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="userType" value="Guest" checked="checked">
-                    <label>Guest</label>
-                </div>
-            </fieldset>
-            <div class="d-flex justify-content-end mt-5">
-                <button type="button" class="btn btn-secondary" onclick="editUserInfo()">Edit</button>
-                <span style="width: 10px"></span>
-                <button type="button" class="btn btn-secondary" onclick="saveUserInfo()">Save</button>
-            </div>
-        </form>
         <div>
-            <a href="mypayments.html">My payment methods</a><br />
+            <br />
+            <br />
+            <a href="addpayments.html">Add New Payment Method</a><br />
             <a href="myreviews.html">My reviews</a><br />
             <a href="myfavourites.html">My favourite gyms</a><br />
         </div>
-    </div>
 
-    <footer id="bottom_nav" class="navbar justify-content-evenly fixed-bottom">
+    <footer id="bottom_nav" class="navbar justify-content-md-center fixed-bottom">
         <div class="container py-1">
             <h5 style="text-align: center;">Terms and Conditions</h5>
         </div>
@@ -131,83 +93,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     -->
 
-
-
     <script>
-        function populateInfo() {
-            firebase.auth().onAuthStateChanged(user => {
-                // Check if user is signed in:
-                if (user) {
 
-                    //go to the correct user document by referencing to the user uid
-                    currentUser = db.collection("users").doc(user.uid).collection("Credit Card").doc(card.uid)
-                    //get the document for current user.git pi
-                    currentUser.get()
-                        .then(userDoc => {
-                            //get the data fields of the user
-                            var cardName = userDoc.data().name;
-                            console.log(userName);
-                            var userBirthday = userDoc.data().userBirthday;
-                            var userEmail = userDoc.data().email;
-                            var userCity = userDoc.data().city;
-                            var userType = userDoc.data().usertype;
-
-                            //if the data fields are not empty, then write them in to the form.
-                            if (userName != null) {
-                                document.getElementById("nameInput").value = userName;
-                            }
-                            if (userBirthday != null) {
-                                document.getElementById("birthdayInput").value = userBirthday;
-                            }
-                            if (userEmail != null) {
-                                document.getElementById("emailInput").value = userEmail;
-                            }
-                            if (userCity != null) {
-                                document.getElementById("cityInput").value = userCity;
-                            }
-                            if (userType != null) {
-                                document.querySelector('input[name="userType"]:checked').value = userType;
-                            }
-                        })
-                } else {
-                    // No user is signed in.
-                    console.log("No user is signed in");
-                }
-            });
-        }
-
-        //call the function to run it
-        populateInfo();
-
-        function editUserInfo() {
-            //Enable the form fields
-            document.getElementById('personalInfoFields').disabled = false;
-        }
-
-        function saveUserInfo() {
-            //console.log("Save is clicked")
-            //grab info that user input in each field
-            userName = document.getElementById('nameInput').value;
-            userBirthday = document.getElementById('birthdayInput').value;
-            userEmail = document.getElementById('emailInput').value;
-            userCity = document.getElementById('cityInput').value;
-            userType = document.querySelector('input[name="userType"]:checked').value;
-
-            //console.log("Values are:", userName, userSchool, UserCity)
-            //write the values in the database:
-            currentUser.update({
-                name: userName,
-                birthday: userBirthday,
-                email: userEmail,
-                city: userCity,
-                type: userType
-            })
-                .then(() => {
-                    console.log("Document successfully updated!");
-                })
-            document.getElementById('personalInfoFields').disabled = true;
-
-        }
     </script>
 
 </body>
