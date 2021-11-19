@@ -105,24 +105,25 @@
             <p id="display_date">placeholder</p>
         </div>
         <div class="px-4 py-5 my-5 text-center">
-                <select class="form-select form-select-sm" id="id_gymname" aria-label="Floating label select example">
-                    <option selected>Select one of gyms.</option>
-                    <option value="Aiden's gym">Aiden's gym</option>
-                    <option value="Prab's gym">Prab's gym</option>
-                    <option value="Alissa's gym">Alissa's gym</option>
-                </select>
-                <label for="floatingSelect">Gym list.</label>
+            <select class="form-select form-select-sm" id="id_gymname" aria-label="Floating label select example">
+                <option selected>Select one of gyms.</option>
+                <option value="Aiden's gym">Aiden's gym</option>
+                <option value="Prab's gym">Prab's gym</option>
+                <option value="Alissa's gym">Alissa's gym</option>
+            </select>
+            <label for="floatingSelect">Gym list.</label>
             <label for="appt">Select a Start Time:</label>
             <input type="time" id="id_from_time" name="appt"><br>
             <label for="appt">Select a Start Time:</label>
             <input type="time" id="id_to_time" name="appt"><br>
             <input type="date" id="id_date" name="appt"><br>
-            <button type="button" class="btn btn-lg px-4 gap-3" onClick="updateAppointment()">Update upcoming appointment!</button>
+            <button type="button" class="btn btn-lg px-4 gap-3" onClick="updateAppointment()">Update upcoming
+                appointment!</button>
         </div>
 
 
 
-            <!-- <label for="pass" class="label">Time to start</label>
+        <!-- <label for="pass" class="label">Time to start</label>
         <input id="id_from_time" name="input_from_time" type="text"><br>
         <label for="pass" class="label">Time to finish</label>
         <input id="id_to_time" name="input_to_time" type="text"><br>
@@ -130,7 +131,7 @@
         
         <button type="button" class="btn btn-lg px-4 gap-3" onClick="addAppointment()">Add new appointment!</button>  -->
 
-        
+
 
 
         <!-- <table class="table table-light">
@@ -267,13 +268,13 @@
             let date = document.getElementById("id_date").value;
             var currentUserDoc = db.collection("appointment").doc(uid)
 
-            currentUserDoc.update({
+            let appointment_info_object = new Object({
                 date: date,
-                from_time: from_time,
-                to_time: to_time,
-                gymname: gymname
+                start_time: from_time,
+                end_time: to_time,
+                gym_name: gymname
             });
-
+            
             alert("Success to update information!")
             displayAppoinment();
         }
