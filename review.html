@@ -122,7 +122,7 @@
             // get the documents of query
             Gyms = querygyms.docs;
 
-            // We want to have one document per hike, so if the the result of 
+            // We want to have one document per gym, so if the the result of 
             //the query is more than one, we can check it right now and clean the DB if needed.
             if (size = 1) {
                 var thisGym = Gyms[0].data();
