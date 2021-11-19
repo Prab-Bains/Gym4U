@@ -33,7 +33,7 @@
 <body>
     <nav id="top_nav" class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a href="login.html"><img src="./images/logo_without_text.png" class="img-fluid" alt="logo"
+            <a href="main.html"><img src="./images/logo_without_text.png" class="img-fluid" alt="logo"
                     style="width: 50px; height: 50px;"></a>
 
             <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
@@ -81,8 +81,8 @@
 
 
 
-    <footer id="bottom_nav" class="navbar justify-content-evenly fixed-bottom">
-        <div class="container py-1">
+    <footer id="bottom_nav">
+        <div>
             <h5>Help</h5>
             <h5>Terms and Conditions</h5>
             <h5>FAQ</h5>
@@ -122,7 +122,11 @@
             // get the documents of query
             Gyms = querygyms.docs;
 
+<<<<<<< HEAD
             // We want to have one document per gym, so if the the result of 
+=======
+            // We want to have one document per gym, so if the the result of
+>>>>>>> c4762169906073640663aecba79a6f65f5613e99
             //the query is more than one, we can check it right now and clean the DB if needed.
             if (size = 1) {
                 var thisGym = Gyms[0].data();
