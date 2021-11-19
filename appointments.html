@@ -61,39 +61,128 @@
             </div>
         </div>
     </nav>
-    <button
+
+    <button class="openBtn">Add appointment</button>
+    <button class onClick="readAppointmentList()">Refresh</button>
 
     <div class="appointment_container" style="text-align: center;">
     </div>
+
+
+    <div class="modal hidden">
+        <div class="bg"></div>
+        <div class="modalBox">
+            <div class="px-4 py-5 my-5 text-center">
+                <label for="floatingSelect">Gym list.</label>
+                <select id="id_gymname" aria-label="Floating label select example">
+                    <option selected>Select one of gyms.</option>
+                    <option value="Aiden's gym">Aiden's gym</option>
+                    <option value="Prab's gym">Prab's gym</option>
+                    <option value="Alissa's gym">Alissa's gym</option>
+                </select>
+                <label for="appt">Select a Start Time:</label>
+                <input type="time" id="id_from_time" name="appt"><br>
+                <label for="appt">Select a Start Time:</label>
+                <input type="time" id="id_to_time" name="appt"><br>
+                <label for="appt">Select a Date:</label>
+                <input type="date" id="id_date" name="appt"><br>
+                <button type="button" class="btn btn-lg px-4 gap-3" onClick="addAppointment()">Add
+                    appointment!</button>
+                <button class="closeBtn">✖</button>
+            </div>
+        </div>
+    </div>
+
 
     <footer id="bottom_nav">
         <div>
             <h5>Terms and Conditions</h5>
         </div>
-    </footer>
 
+    </footer>
 
     <!-- <button type="button" class="btn btn-lg px-4 gap-3" onClick="AddAppointmentInfo()">Write appointment Data to DB</button> -->
 
     <script>
+        function removeAppointment(id) {
+            firebase.auth().onAuthStateChanged(user => {
+                if (user) {
+                    var uid = user.uid
+                    var currentDB = db.collection("appointments").doc(uid)
+
+                    var date_id = "date_id_" + id.slice(-1)
+                    var to_time_id = "to_time_id_" + id.slice(-1)
+                    var from_time_id = "from_time_id_" + id.slice(-1)
+                    var gym_name_id = "gym_name_id_" + id.slice(-1)
+
+                    var date_value = $("#" + date_id).text();
+                    var to_time_value = $("#" + to_time_id).text();
+                    var from_time_value = $("#" + from_time_id).text();
+                    var gym_name_id_value = $("#" + gym_name_id).text();
+
+
+                    let appointment_info_object = new Object({
+                        date: date_value,
+                        start_time: from_time_value,
+                        end_time: to_time_value,
+                        gym_name: gym_name_id_value
+                    });
+
+                    currentDB.update({
+                        appointment_list: firebase.firestore.FieldValue.arrayRemove(appointment_info_object)
+                    })
+                    alert("Succesfully, remove appointment.")
+                }
+            })
+        }
+
+
+        function addAppointment() {
+            firebase.auth().onAuthStateChanged(user => {
+                if (user) {
+                    var uid = user.uid
+                    var currentDB = db.collection("appointments").doc(uid)
+
+                    let gymname = document.getElementById("id_gymname").value;
+                    let from_time = document.getElementById("id_from_time").value;
+                    let to_time = document.getElementById("id_to_time").value;
+                    let date = document.getElementById("id_date").value;
+                    let appointment_info_object = new Object({
+                        date: date,
+                        start_time: from_time,
+                        end_time: to_time,
+                        gym_name: gymname
+                    });
+                    console.log(uid);
+                    // console.log(gymname);
+                    // console.log(from_time);
+                    // console.log(to_time);
+                    // console.log(date);
+                    // console.log(appointment_info_object);
+
+                    currentDB.update({
+                        appointment_list: firebase.firestore.FieldValue.arrayUnion(appointment_info_object)
+                    })
+                    alert("Succesfully, add appointment.")
+                } else {
+                    alert("no user sign-in");
+                }
+            })
+        }
+
+
         function readAppointmentList() {
+            $(".appointment_container").empty();
             firebase.auth().onAuthStateChanged(user => {
                 if (user) {
                     var uid = user.uid
                     console.log(uid);
-                    var currentDB = db.collection("appointments").doc("sZD5S3Qp3wNqoMH8qnvV")
+                    var currentDB = db.collection("appointments").doc(uid)
                     currentDB.get()
                         .then(appointmentListdoc => {
                             var list = appointmentListdoc.data().appointment_list
                             console.log(list);
                             for (let i = list.length - 1; i > -1; i--) {
-                                console.log(i);
-                                console.log(list[i]);
-                                console.log(list[i]["date"]);
-                                console.log(list[i]["end_time"]);
-                                console.log(list[i]["start_time"]);
-                                console.log(list[i]["gym_name"]);
-
                                 date = list[i]["date"];
                                 end_time = list[i]["end_time"];
                                 start_time = list[i]["start_time"];
@@ -101,15 +190,15 @@
 
                                 var containerform =
                                     `<div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
-                                    <div class="card-header" id="card-header${i}">${gym_name}</div>
+                                    <div class="card-header" id="gym_name_id_${i}">${gym_name}</div>
                                         <div class="card-body">
-                                            <h5 class="card-title">Date : ${date}</h5>
-                                            <p class="card-text">Start time : ${start_time}</p>
-                                            <p class="card-text">End time : ${end_time}</p>
+                                            <h5 class="card-title">Date : </h5><h5 id="date_id_${i}">${date}</h5></h5>
+                                            <p class="card-text">Start time : <span id="from_time_id_${i}">${start_time}</span></p>
+                                            <p class="card-text">End time : <span id="to_time_id_${i}">${end_time}</span></p>
+                                            <button id="deleteButton_${i}" onclick="removeAppointment(this.id)">Remove this appointment</button>
                                         </div>
                                     </div>`;
                                 $(".appointment_container").append(containerform);
-
                             }
                         })
 
@@ -120,66 +209,19 @@
         }
         readAppointmentList();
 
-
-        function AddAppointmentInfo() {
-            firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                var uid = user.uid
-                let appointment_info_object = [
-                    {
-                        date: "03-NOV-2021",
-                        start_time: "18:00",
-                        end_time: "20:00",
-                        gym_name: "Aiden House gym"
-                    },
-                    {
-                        date: "05-NOV-2021",
-                        start_time: "18:00",
-                        end_time: "20:00",
-                        gym_name: "Aiden House gym"
-                    },
-                    {
-                        date: "09-NOV-2021",
-                        start_time: "18:00",
-                        end_time: "20:00",
-                        gym_name: "Aiden House gym"
-                    },
-                    {
-                        date: "13-NOV-2021",
-                        start_time: "18:00",
-                        end_time: "20:00",
-                        gym_name: "Aiden House gym"
-                    }
-                ]
-                let appointment_info_element = {
-                        date: "13-NOV-2021",
-                        start_time: "18:00",
-                        end_time: "20:00",
-                        gym_name: "Aiden House gym"
-                    }
-                var currentGym = db.collection("appointments").doc("vUcpSA0sNeOdazO7l38fYGYvsdG3").set({
-                    appointment_list: appointment_info_element
-                })
-                .then(() => {
-                    console.log("Add success")
-                })
-                .catch((error) => {
-                    console.log("Error: ", error);
-                })
-                //get the document for current user.
-                // currentGym.get()
-                //     .then(gymDoc => {
-                //         db.collection("appointments").add({
-                //             appointment_list: appointment_info_object
-                //         });
-                //     })
-
-            } else {
-                alert("no user sign-in");
-            }
-        })
+        const open = () => {
+            document.querySelector(".modal").classList.remove("hidden");
         }
-        AddAppointmentInfo();
+        const close = () => {
+            document.querySelector(".modal").classList.add("hidden");
+            readAppointmentList();
+        }
+
+        document.querySelector(".openBtn").addEventListener("click", open);
+        document.querySelector(".closeBtn").addEventListener("click", close);
+        document.querySelector(".bg").addEventListener("click", close);
+
+
 
     </script>
 </body>

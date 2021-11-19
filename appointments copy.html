@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Firebase CSS -->
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+
+    <!-- Firebase 8 CDNs-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+        </script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+
+
+    <!-- Link to the api keys for your firebase project -->
+    <script src="scripts/firebaseAPI_DTC11.js"></script>
+
+    <!-- Our Own CSS-->
+    <link rel="stylesheet" type="text/css" href="./styles/my_style.css">
+    <title>Gym4U</title>
+</head>
+
+<body>
+    <!-- navbar-light bg-secondary -->
+    <nav id="top_nav" class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a href="main.html"><img src="./images/logo_without_text.png" class="img-fluid" alt="logo"
+                    style="width: 50px; height: 50px;"></a>
+
+            <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                aria-controls="offcanvasRight">&#9776;</button>
+
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                aria-labelledby="offcanvasRightLabel">
+                <div class="offcanvas-header">
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <div class="card" style="width: 100%;">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><a href="profile.html">Profile</a></li>
+                            <li class="list-group-item"><a href="listings.html">Listings</a></li>
+                            <li class="list-group-item"><a href="#">Appointments</a></li>
+                            <li class="list-group-item"><a href="help.html">Help</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Launch demo modal
+      </button>
+
+
+
+
+      <div id="modal" class="modal-overlay">
+        <div class="modal-window">
+            <div class="title">
+                <h2>모달</h2>
+            </div>
+            <div class="close-area">X</div>
+            <div class="content">
+                <p>가나다라마바사 아자차카타파하</p>
+                <p>가나다라마바사 아자차카타파하</p>
+                <p>가나다라마바사 아자차카타파하</p>
+                <p>가나다라마바사 아자차카타파하</p>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary">Save changes</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+    <div class="appointment_container" style="text-align: center;">
+    </div>
+
+    <footer id="bottom_nav">
+        <div>
+            <h5>Terms and Conditions</h5>
+        </div>
+    </footer>
+
+
+    <!-- <button type="button" class="btn btn-lg px-4 gap-3" onClick="AddAppointmentInfo()">Write appointment Data to DB</button> -->
+
+    <script>
+
+
+        function readAppointmentList() {
+            firebase.auth().onAuthStateChanged(user => {
+                if (user) {
+                    var uid = user.uid
+                    console.log(uid);
+                    var currentDB = db.collection("appointments").doc("sZD5S3Qp3wNqoMH8qnvV")
+                    currentDB.get()
+                        .then(appointmentListdoc => {
+                            var list = appointmentListdoc.data().appointment_list
+                            console.log(list);
+                            for (let i = list.length - 1; i > -1; i--) {
+                                console.log(i);
+                                console.log(list[i]);
+                                console.log(list[i]["date"]);
+                                console.log(list[i]["end_time"]);
+                                console.log(list[i]["start_time"]);
+                                console.log(list[i]["gym_name"]);
+
+                                date = list[i]["date"];
+                                end_time = list[i]["end_time"];
+                                start_time = list[i]["start_time"];
+                                gym_name = list[i]["gym_name"];
+
+                                var containerform =
+                                    `<div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+                                    <div class="card-header" id="card-header${i}">${gym_name}</div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">Date : ${date}</h5>
+                                            <p class="card-text">Start time : ${start_time}</p>
+                                            <p class="card-text">End time : ${end_time}</p>
+                                            <button>Remove this appointment</button>
+                                        </div>
+                                    </div>`;
+                                $(".appointment_container").append(containerform);
+
+                            }
+                        })
+
+                } else {
+                    alert("no user sign-in");
+                }
+            })
+        }
+        readAppointmentList();
+
+
+        // function AddAppointmentInfo() {
+        //     firebase.auth().onAuthStateChanged(user => {
+        //     if (user) {
+        //         var uid = user.uid
+        //         let appointment_info_object = [
+        //             {
+        //                 date: "03-NOV-2021",
+        //                 start_time: "18:00",
+        //                 end_time: "20:00",
+        //                 gym_name: "Aiden House gym"
+        //             },
+        //             {
+        //                 date: "05-NOV-2021",
+        //                 start_time: "18:00",
+        //                 end_time: "20:00",
+        //                 gym_name: "Aiden House gym"
+        //             },
+        //             {
+        //                 date: "09-NOV-2021",
+        //                 start_time: "18:00",
+        //                 end_time: "20:00",
+        //                 gym_name: "Aiden House gym"
+        //             },
+        //             {
+        //                 date: "13-NOV-2021",
+        //                 start_time: "18:00",
+        //                 end_time: "20:00",
+        //                 gym_name: "Aiden House gym"
+        //             }
+        //         ]
+        //         let appointment_info_element = {
+        //                 date: "13-NOV-2021",
+        //                 start_time: "18:00",
+        //                 end_time: "20:00",
+        //                 gym_name: "Aiden House gym"
+        //             }
+        //         var currentGym = db.collection("appointments").doc("vUcpSA0sNeOdazO7l38fYGYvsdG3").set({
+        //             appointment_list: appointment_info_element
+        //         })
+        //         .then(() => {
+        //             console.log("Add success")
+        //         })
+        //         .catch((error) => {
+        //             console.log("Error: ", error);
+        //         })
+        //         //get the document for current user.
+        //         // currentGym.get()
+        //         //     .then(gymDoc => {
+        //         //         db.collection("appointments").add({
+        //         //             appointment_list: appointment_info_object
+        //         //         });
+        //         //     })
+
+        //     } else {
+        //         alert("no user sign-in");
+        //     }
+        // })
+        // }
+        // AddAppointmentInfo();
+
+    </script>
+</body>
+
+</html>
