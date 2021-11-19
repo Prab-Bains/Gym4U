@@ -5,7 +5,6 @@ body {
 }
 
 
-
 #top_nav {
     border-bottom: 3px solid #00e6d0;
 }
@@ -144,4 +143,9 @@ a:visited {
 
 #appointment_body {
     font-size: 24px;
+}
+
+#reviews > .card{
+    background-color: #00e6d0;
+    margin: 20px;
 }

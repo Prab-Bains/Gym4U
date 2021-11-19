@@ -144,10 +144,17 @@
             let billingAddress = document.getElementById("addressInput").value;
             let cardType = document.querySelector('input[name="cardType"]').value;
 
+                console.log("hello");
+
+
             firebase.auth().onAuthStateChanged(user => {
                 if (user) {
-                    var currentUser = db.collection("users").doc(user.uid);
                     var userID = user.uid;
+
+                    var currentUser = db.collection("users").doc(userID);
+
+                    console.log(userID);
+
                     //get the document for current user.
                     currentUser.get()
                         .then(userDoc => {
