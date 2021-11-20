@@ -112,6 +112,11 @@
     let gymID = localStorage.getItem("gymID");
     console.log(gymID)
 
+    function move_to_listings() {
+        var link = 'listings.html'
+        location.replace(link);
+    }
+
     db.collection("gyms").where("name", "==", gymID)
         .get()
         .then(querygyms => {
@@ -153,12 +158,13 @@
                             Title: Title,
                             Description: Description
                         });
+
                     })
             } else {
                 // No user is signed in.
                 console.log("no user signed in");
             }
         });
-
+        alert("Your review was successfully submited");
     }
 </script>

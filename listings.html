@@ -136,9 +136,10 @@
         function gotoReview(gymName) {
             console.log(gymName)
             localStorage.setItem('gymID', gymName);
-            location.replace("review.html")
+            // location.replace("review.html")
             console.log(gymName)
             console.log("clicked")
+            window.open('review.html', "_blank");
 
         }
     </script>

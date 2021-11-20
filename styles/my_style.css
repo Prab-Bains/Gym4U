@@ -5,6 +5,7 @@ body {
 }
 
 
+
 #top_nav {
     border-bottom: 3px solid #00e6d0;
 }
@@ -127,6 +128,10 @@ a:visited {
     font-size: 24px;
 }
 
+#hikeCardTemplate>img {
+    width: 100px;
+    height: 100px;
+}
 
 #gymOverviewTitle {
     text-align: center;
