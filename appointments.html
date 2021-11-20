@@ -102,7 +102,7 @@
         </div>
     </footer>
 
-
+0
     <script>
         function removeAppointment(id) {
             firebase.auth().onAuthStateChanged(user => {
@@ -135,7 +135,6 @@
             })
         }
 
-
         function addAppointment() {
             firebase.auth().onAuthStateChanged(user => {
                 if (user) {
@@ -162,7 +161,6 @@
             })
         }
 
-
         function readAppointmentList() {
             $(".appointment_container").empty();
             firebase.auth().onAuthStateChanged(user => {
@@ -181,18 +179,17 @@
                                 gym_name = list[i]["gym_name"];
                                 var containerform =
                                     `<div class="card text-white bg-secondary mb-5" style="max-width: 18rem;">
-                                    <div class="card-header" id="gym_name_id_${i}">${gym_name}</div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Date : </h5><h5 id="date_id_${i}">${date}</h5></h5>
-                                            <p class="card-text">Start time : <span id="from_time_id_${i}">${start_time}</span></p>
-                                            <p class="card-text">End time : <span id="to_time_id_${i}">${end_time}</span></p>
-                                            <button id="deleteButton_${i}" class="btn btn-secondary" onclick="removeAppointment(this.id)">Remove</button>
-                                        </div>
+                                        <div class="card-header" id="gym_name_id_${i}">${gym_name}</div>
+                                            <div class="card-body">
+                                                <h5 class="card-title">Date : </h5><h5 id="date_id_${i}">${date}</h5></h5>
+                                                <p class="card-text">Start time : <span id="from_time_id_${i}">${start_time}</span></p>
+                                                <p class="card-text">End time : <span id="to_time_id_${i}">${end_time}</span></p>
+                                                <button id="deleteButton_${i}" class="btn btn-secondary" onclick="removeAppointment(this.id)">Remove</button>
+                                            </div>
                                     </div>`;
                                 $(".appointment_container").append(containerform);
                             }
                         })
-
                 } else {
                     alert("no user sign-in");
                 }
