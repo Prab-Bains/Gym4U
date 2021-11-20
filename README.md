@@ -7,7 +7,7 @@
 ## General Info
 This browser based web application to ...
 * Hi my name is Alissa. I'm excited about this project because I think it will be interesting to go through all of the phases of developing this idea.
-* Hi my name is GyoungHwan. I'm excited about this project because ...
+* Hi my name is GyoungHwan. I'm excited about this project because this is my first project in Canada.
 Hi my name is Prabhjeet Bains and I am looking forward to starting the project.
 	
 ## Technologies
@@ -23,8 +23,8 @@ Content of the project folder:
 ```
  Top level of project folder: 
 ├── .gitignore               # Git ignore file
-├── index.html               # landing HTML file, this is what users see when you come to url
-└── README.md
+├── index.html               # landing HTML file, this is what users see when you first come to the url
+└── README.md                # Overview of our entire project
 
 It has the following subfolders and files:
 ├── .git                     # Folder for git repo
