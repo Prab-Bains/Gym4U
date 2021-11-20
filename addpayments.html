@@ -68,7 +68,7 @@
                     <label for="ccn">Credit Card Number:</label>
                     <br />
                     <input id="ccn" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number"
-                        maxlength="19" placeholder="xxxx xxxx xxxx xxxx" required>
+                        maxlength="16" placeholder="xxxx xxxx xxxx xxxx" required>
                 </div>
                 <br />
                 <div class="form-group">
@@ -121,7 +121,7 @@
 
     <footer id="bottom_nav">
         <div>
-            <h5>Terms and Conditions</h5>
+            Copyright Gym4U
         </div>
     </footer>
 
@@ -138,6 +138,7 @@
     <script>
 
         function saveCardInfo() {
+            let cardNumber = document.getElementById("ccn").value;
             let cardName = document.getElementById("nameInput").value;
             let cardExpiry = document.getElementById("expiryInput").value;
             let cardCVV = document.getElementById("cvvInput").value;
@@ -164,6 +165,7 @@
                             db.collection("creditcards").add({
                                 UserID: userID,
                                 UserEmail: userEmail,
+                                CardNumber: cardNumber,
                                 CardName: cardName,
                                 CardExpiry: cardExpiry,
                                 CardCVV: cardCVV,
