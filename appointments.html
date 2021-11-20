@@ -61,10 +61,12 @@
             </div>
         </div>
     </nav>
+    <div id="appointment_button_group" style="text-align: center;">
+    <button class="btn btn-secondary" id="openBtn">Add appointment</button>
+    <button class="btn btn-secondary" onClick="readAppointmentList()">Refresh</button>
+        
 
-    <button class="openBtn">Add appointment</button>
-    <button class onClick="readAppointmentList()">Refresh</button>
-
+    </div>
     <div class="appointment_container" style="text-align: center;">
     </div>
 
@@ -74,7 +76,7 @@
         <div class="modalBox">
             <div class="px-4 py-5 my-5 text-center">
                 <label for="floatingSelect">Gym list.</label>
-                <select id="id_gymname" aria-label="Floating label select example">
+                <select id="id_gymname" class="form-select form-select-sm" aria-label="Floating label select example">
                     <option selected>Select one of gyms.</option>
                     <option value="Aiden's gym">Aiden's gym</option>
                     <option value="Prab's gym">Prab's gym</option>
@@ -86,9 +88,9 @@
                 <input type="time" id="id_to_time" name="appt"><br>
                 <label for="appt">Select a Date:</label>
                 <input type="date" id="id_date" name="appt"><br>
-                <button type="button" class="btn btn-lg px-4 gap-3" onClick="addAppointment()">Add
+                <button type="button" class="btn btn-secondary" onClick="addAppointment()">Add
                     appointment!</button>
-                <button class="closeBtn">✖</button>
+                <button class="btn btn-secondary" id="closeBtn">✖</button>
             </div>
         </div>
     </div>
@@ -96,12 +98,10 @@
 
     <footer id="bottom_nav">
         <div>
-            <h5>Terms and Conditions</h5>
+            &#169; Gym4U
         </div>
-
     </footer>
 
-    <!-- <button type="button" class="btn btn-lg px-4 gap-3" onClick="AddAppointmentInfo()">Write appointment Data to DB</button> -->
 
     <script>
         function removeAppointment(id) {
@@ -119,7 +119,6 @@
                     var to_time_value = $("#" + to_time_id).text();
                     var from_time_value = $("#" + from_time_id).text();
                     var gym_name_id_value = $("#" + gym_name_id).text();
-
 
                     let appointment_info_object = new Object({
                         date: date_value,
@@ -153,13 +152,6 @@
                         end_time: to_time,
                         gym_name: gymname
                     });
-                    console.log(uid);
-                    // console.log(gymname);
-                    // console.log(from_time);
-                    // console.log(to_time);
-                    // console.log(date);
-                    // console.log(appointment_info_object);
-
                     currentDB.update({
                         appointment_list: firebase.firestore.FieldValue.arrayUnion(appointment_info_object)
                     })
@@ -187,15 +179,14 @@
                                 end_time = list[i]["end_time"];
                                 start_time = list[i]["start_time"];
                                 gym_name = list[i]["gym_name"];
-
                                 var containerform =
-                                    `<div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+                                    `<div class="card text-white bg-secondary mb-5" style="max-width: 18rem;">
                                     <div class="card-header" id="gym_name_id_${i}">${gym_name}</div>
                                         <div class="card-body">
                                             <h5 class="card-title">Date : </h5><h5 id="date_id_${i}">${date}</h5></h5>
                                             <p class="card-text">Start time : <span id="from_time_id_${i}">${start_time}</span></p>
                                             <p class="card-text">End time : <span id="to_time_id_${i}">${end_time}</span></p>
-                                            <button id="deleteButton_${i}" onclick="removeAppointment(this.id)">Remove this appointment</button>
+                                            <button id="deleteButton_${i}" class="btn btn-secondary" onclick="removeAppointment(this.id)">Remove</button>
                                         </div>
                                     </div>`;
                                 $(".appointment_container").append(containerform);
@@ -216,14 +207,9 @@
             document.querySelector(".modal").classList.add("hidden");
             readAppointmentList();
         }
-
-        document.querySelector(".openBtn").addEventListener("click", open);
-        document.querySelector(".closeBtn").addEventListener("click", close);
+        document.querySelector("#openBtn").addEventListener("click", open);
+        document.querySelector("#closeBtn").addEventListener("click", close);
         document.querySelector(".bg").addEventListener("click", close);
-
-
-
     </script>
 </body>
-
 </html>

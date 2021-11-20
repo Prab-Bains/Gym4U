@@ -186,3 +186,7 @@ a:visited {
   .hidden {
     display: none;
   }
+
+  .simpleButton {
+      border-radius: 5px;
+  }
