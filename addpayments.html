@@ -145,9 +145,6 @@
             let billingAddress = document.getElementById("addressInput").value;
             let cardType = document.querySelector('input[name="cardType"]').value;
 
-                console.log("hello");
-
-
             firebase.auth().onAuthStateChanged(user => {
                 if (user) {
                     var userID = user.uid;
