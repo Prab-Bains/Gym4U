@@ -59,21 +59,45 @@
         </div>
     </nav>
 
-    <div class="payment-information">
-        <h5>Saved Payment Methods:</h5>
-        </div>
+    <button class="openBtn">Add Credit Card</button>
+    <button class onClick="readCreditCardList()">Refresh</button>
 
-        <div>
-            <br />
-            <br />
-            <a href="addpayments.html">Add New Payment Method</a><br />
-            <a href="myreviews.html">My reviews</a><br />
-            <a href="myfavourites.html">My favourite gyms</a><br />
+    <div class="credit_container" style="text-align: center;">
+    </div>
+
+
+    <div class="modal hidden">
+        <div class="bg"></div>
+        <div class="modalBox">
+            <div class="px-4 py-5 my-5 text-center">
+                <label for="floatingSelect">Gym list.</label>
+                <select id="cardtype_id" aria-label="Floating label select example">
+                    <option selected>Credit Card Type</option>
+                    <option value="Visa">Visa</option>
+                    <option value="MasterCard">MasterCard</option>
+                    <option value="American Express">American Express</option>
+                </select>
+                <label for="creditcardno">Credit Card Number:</label>
+                <input id="creditcardno_id" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number"
+                    maxlength="16" placeholder="xxxx xxxx xxxx xxxx" name="creditcardno" required><br>
+                <label for="cardname">Name on Card:</label>
+                <input type="text" id="cardname_id" placeholder="Enter full name on card" name="cardname" required><br>
+                <label for="expiry">Expiry Date:</label>
+                <input type="date" id="expiry_id" name="expiry" required><br>
+                <label for="cvv">CVV:</label>
+                <input type="password" id="cvv_id" placeholder="cvv number" inputmode="numeric" pattern="[0-9]"
+                    maxlength="3" name="cvv" required>
+                <label for="billing">Billing Address:</label>
+                <input type="text" id="billing_id" placeholder="Enter your billing address" width="100px" name="billing" required>
+                <button type="button" class="btn btn-lg px-4 gap-3" onClick="addCreditCard()">Save Card</button>
+                <button class="closeBtn">✖</button>
+            </div>
         </div>
+    </div>
 
     <footer id="bottom_nav">
         <div>
-            <h5 style="text-align: center;">Terms and Conditions</h5>
+            &#169; Gym4U
         </div>
     </footer>
 
@@ -94,6 +118,131 @@
     -->
 
     <script>
+
+        function removeCreditCard(id) {
+            firebase.auth().onAuthStateChanged(user => {
+                if (user) {
+                    var uid = user.uid
+                    var currentDB = db.collection("creditcards").doc(uid)
+                    var creditCardtype = "cardtype_id" + id.slice(-1)
+                    var creditCardNo = "creditcardno_id" + id.slice(-1)
+                    var cardName = "cardname_id" + id.slice(-1)
+                    var expiry = "expiry_id" + id.slice(-1)
+                    var CVV = "cvv_id" + id.slice(-1)
+                    var billing = "billing_id" +id.slice(-1)
+
+                    var creditcardtype_value = $("#" + creditcardtype_id).text();
+                    var creditcardno_value = $("#" + creditcardno_id).text();
+                    var cardname_value = $("#" + cardname_id).text();
+                    var expiry_value = $("#" + expiry_id).text();
+                    var cvv_value = $("#" + cvv_id).text();
+                    var billing_value = $("#" + billing_id).text();
+
+
+                    let creditcard_info_object = new Object({
+                        creditcardtype: creditcardtype_value,
+                        creditcardno: creditcardno_value,
+                        cardname: cardname_value,
+                        expiry: expiry_value,
+                        cvv: cvv_value,
+                        billing: billing_value
+                    });
+
+                    currentDB.update({
+                        creditcard_list: firebase.firestore.FieldValue.arrayRemove(creditcard_info_object)
+                    })
+                    alert("Succesfully, removed credit card.")
+                }
+            })
+        }
+
+
+        function addCreditcard() {
+            firebase.auth().onAuthStateChanged(user => {
+                if (user) {
+                    var uid = user.uid
+                    var currentDB = db.collection("creditcards").doc(uid)
+
+                    let cardtype = document.getElementById("cardTtype_id").value;
+                    let cardno = document.getElementById("creditcardno_id").value;
+                    let cardname = document.getElementById("cardname_id").value;
+                    let expiry = document.getElementById("expiry_id").value;
+                    let cvv = document.getElementById("cvv_id").value;
+                    let billing = document.getElementById("billing_id").value;
+                    let creditcard_info_object = new Object({
+                        creditcardtype: creditcardtype_value,
+                        creditcardno: creditcardno_value,
+                        cardname: cardname_value,
+                        expiry: expiry_value,
+                        cvv: cvv_value,
+                        billing: billing_value
+                    });
+                    console.log(uid);
+                    // console.log(gymname);
+                    // console.log(from_time);
+                    // console.log(to_time);
+                    // console.log(date);
+                    // console.log(appointment_info_object);
+
+                    currentDB.update({
+                        creditcard_list: firebase.firestore.FieldValue.arrayUnion(credit_info_object)
+                    })
+                    alert("Succesfully, added credit card.")
+                } else {
+                    alert("no user signed-in");
+                }
+            })
+        }
+
+
+        function readAppointmentList() {
+            $(".credit_card_container").empty();
+            firebase.auth().onAuthStateChanged(user => {
+                if (user) {
+                    var uid = user.uid
+                    console.log(uid);
+                    var currentDB = db.collection("creditcards").doc(uid)
+                    currentDB.get()
+                        .then(appointmentListdoc => {
+                            var list = appointmentListdoc.data().appointment_list
+                            console.log(list);
+                            for (let i = list.length - 1; i > -1; i--) {
+                                cardType = list[i]["cardType"];
+                                expiry = list[i]["expiry"];
+
+
+                                var containerform =
+                                    `<div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+                                    <div class="card-header" id="cardtype_id_${i}">${cardtype}</div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">Expiry : </h5><h5 id="expiry_id_${i}">${expiry}</h5></h5>
+                                            <button id="deleteButton_${i}" onclick="removeCreditCard(this.id)">Remove this Credit Card</button>
+                                        </div>
+                                    </div>`;
+                                $(".credit_card_container").append(containerform);
+                            }
+                        })
+
+                } else {
+                    alert("no user signed-in");
+                }
+            })
+        }
+        readAppointmentList();
+
+        const open = () => {
+            document.querySelector(".modal").classList.remove("hidden");
+        }
+        const close = () => {
+            document.querySelector(".modal").classList.add("hidden");
+            readAppointmentList();
+        }
+
+        document.querySelector(".openBtn").addEventListener("click", open);
+        document.querySelector(".closeBtn").addEventListener("click", close);
+        document.querySelector(".bg").addEventListener("click", close);
+
+
 
     </script>
 
