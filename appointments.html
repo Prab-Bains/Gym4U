@@ -64,8 +64,8 @@
     <div id="appointment_button_group" style="text-align: center;">
     <button class="btn btn-secondary" id="openBtn">Add appointment</button>
     <button class="btn btn-secondary" onClick="readAppointmentList()">Refresh</button>
-        
-
+    
+    
     </div>
     <div class="appointment_container" style="text-align: center;">
     </div>
@@ -94,7 +94,7 @@
             </div>
         </div>
     </div>
-
+    <button onclick="moveToPage('a','b','c')">Hello, test.html</button>
 
     <footer id="bottom_nav">
         <div>
@@ -102,8 +102,14 @@
         </div>
     </footer>
 
-0
     <script>
+
+        function moveToPage(id, detail, aim){
+            window.location.href="test.html?id=" + id;
+        }
+
+        $("#panenl1").toggle(1000).toggle(1000)
+
         function removeAppointment(id) {
             firebase.auth().onAuthStateChanged(user => {
                 if (user) {
@@ -145,6 +151,7 @@
                     let from_time = document.getElementById("id_from_time").value;
                     let to_time = document.getElementById("id_to_time").value;
                     let date = document.getElementById("id_date").value;
+
                     let appointment_info_object = new Object({
                         date: date,
                         start_time: from_time,
@@ -166,12 +173,10 @@
             firebase.auth().onAuthStateChanged(user => {
                 if (user) {
                     var uid = user.uid
-                    console.log(uid);
                     var currentDB = db.collection("appointments").doc(uid)
                     currentDB.get()
                         .then(appointmentListdoc => {
                             var list = appointmentListdoc.data().appointment_list
-                            console.log(list);
                             for (let i = list.length - 1; i > -1; i--) {
                                 date = list[i]["date"];
                                 end_time = list[i]["end_time"];
