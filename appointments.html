@@ -97,7 +97,6 @@
             </div>
         </div>
     </div>
-    <button onclick="moveToPage('a','b','c')">Hello, test.html</button>
 
     <footer id="bottom_nav">
         <div>
@@ -106,12 +105,6 @@
     </footer>
 
     <script>
-
-        function moveToPage(id, detail, aim) {
-            window.location.href = "test.html?id=" + id;
-        }
-
-        $("#panenl1").toggle(1000).toggle(1000)
 
         function removeAppointment(id) {
             firebase.auth().onAuthStateChanged(user => {
