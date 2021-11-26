@@ -72,7 +72,7 @@
 
     <div class="welcome">
         <h1>
-            <p>Welcome, <span id="name-goes-here" class="highlight"></span></p>
+            <p>Welcome, <span id="name-goes-here" class="highlight">New User</span></p>
         </h1>
         <h3>
             <p>Ready to start having cheaper, more convenient workouts?</p>
@@ -121,7 +121,9 @@
         }
         insertName();
 
-        </script>
+        // listener for the signout link
+        document.getElementById("signout").addEventListener("click", logout);
+    </script>
 
 </body>
 
