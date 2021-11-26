@@ -204,14 +204,19 @@
                                 billing_info = appointment_list[pointer]['billing_info'];
                                 
                                 var containerform =
-                                    `<div class="card text-white bg-secondary mb-5" id="${pointer}" style="max-width: 18rem;">
+                                    `<div class="card text-white bg-secondary mb-5" id="${pointer}" style="max-width: 20rem;">
                                         <div class="card-header" id="card_name_id_${pointer}">${card_name}</div>
                                             <div class="card-body">
-                                                <input type="text" id="card_type_id_${pointer}" value="${card_type}">
-                                                <input type="text" id="credit_card_no_id_${pointer}" value="${credit_card_no}">
-                                                <input type="text" id="cvv_number_id_${pointer}" value="${cvv_number}">
-                                                <input type="text" id="expiry_date_id_${pointer}" value="${expiry_date}">
-                                                <input type="text" id="billing_info_id_${pointer}" value="${billing_info}">
+                                                <span class="card-text">Card type:</span>
+                                                <input type="text" id="card_type_id_${pointer}" value="${card_type}"></br>
+                                                <span class="card-text">Card Number:</span>
+                                                <input type="text" id="credit_card_no_id_${pointer}" value="${credit_card_no}"></br>
+                                                <span class="card-text">CVV:</span>
+                                                <input type="text" id="cvv_number_id_${pointer}" value="${cvv_number}"></br>
+                                                <span class="card-text">Expiry date:</span>
+                                                <input type="text" id="expiry_date_id_${pointer}" value="${expiry_date}"></br>
+                                                <span class="card-text">Billing:</span>
+                                                <input type="text" id="billing_info_id_${pointer}" value="${billing_info}"></br>
                                                 <button id="deleteButton_${pointer}" class="btn btn-secondary" onclick="removeCreditCard(this.id)">Remove</button>
                                                 <button id="deleteButton_${pointer}" class="btn btn-secondary" onclick="UpdateAppointment(this.id)">Update</button>
                                             </div>
