@@ -40,7 +40,7 @@ body {
     padding: 2px;
 }
 
-.btn,.opnBtd:hover {
+.btn:hover, .opnBtd:hover {
     background-color: black;
     color: white;
     border: white;
@@ -48,6 +48,11 @@ body {
 
 .btn-close {
     background-color: #00e6d0;
+}
+
+.btn:visited{
+    background-color: black;
+    border: #00e6d0;
 }
 
 .offcanvas {
@@ -207,3 +212,7 @@ a:visited {
 .card{
     width:90%;
     }
+
+.signup_message{
+    text-align: center;
+}

@@ -24,7 +24,7 @@
     <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
 
     <!-- Link to the api keys for your firebase project -->
-    <script src="./scripts/firebaseAPI_DTC11.js"></script>
+    <script src="scripts/firebaseAPI_DTC11.js"></script>
 
     <title>Gym4U</title>
 </head>
@@ -53,7 +53,6 @@
                             <li class="list-group-item"><a href="listings.html">Listings</a></li>
                             <li class="list-group-item"><a href="appointments.html">Appointments</a></li>
                             <li class="list-group-item"><a href="help.html">Help</a></li>
-                            <li class="list-group-item"><a id="signout">Sign Out</a></li>
                         </ul>
                     </div>
                 </div>
@@ -61,17 +60,24 @@
         </div>
     </nav>
 
-    <div class="px-4 py-5 my-5 text-center">
-        <h1 class="display-5 fw-bold">Locations Near You</h1>
-    </div>
-
-    <div class="listings">
-        <div class="container">
-            <div class="card-group">
+    <div class="container">
+        <h1 class="signup_message">Welcome to Gym4U!</h1>
+        <h2 class="signup_message">We're excited to start working with you!</h2>
+        <form>
+            <fieldset class="mb-3" id="personalInfoFields">
+                Email <br />
+                <input type="email" id="signup-email" /><br />
+                Confirm Email <br />
+                <input type="email" id="signup-reemail" autocomplete="disable" /><br />
+                Password <br />
+                <input type="password" id="signup-password" /><br /><br />
+                <button id="register" class="btn">Sign Up</button>
+            </fieldset>
+            <div class="d-flex justify-content-end mt-5">
+                <span style="width: 10px"></span>
             </div>
-        </div>
+        </form>
     </div>
-
 
     <footer id="bottom_nav">
         <div>
@@ -86,65 +92,39 @@
 
         </script>
 
-
     <script>
-        function move_to_gym_overview() {
-            var link = 'gymoverview.html'
-            location.replace(link);
-        }
+        // invoke firebase authentication
+        const auth = firebase.auth();
 
-        function displayGyms() {
-            // let hikeCardTemplate = document.getElementById("hikeCardTemplate");
-            // let hikeCardGroup = document.getElementById("gymCardGroup");
+        // register new users
+        const register = () => {
+            const email = document.querySelector("#signup-email").value;
+            const reemail = document.querySelector("#signup-reemail").value;
+            const password = document.querySelector("#signup-password").value;
 
-            db.collection("gyms").get()
-                .then(allGyms => {
-                    allGyms.forEach(doc => {
-                        var gymName = doc.data().name; //gets the name field
-                        var gymImage = doc.data().image; //gets the image field
-                        var gymAddress = doc.data().address; //gets the description field
-                        var gymDescription = doc.data().description; //gets the description field
+            if (email.trim() == "") {
+                alert("Enter Email");
+            } else if (password.trim().length < 7) {
+                alert("Password must be at least 7 characters");
+            } else if (email != reemail) {
+                alert("emails do not match");
+            } else {
+                auth
+                    .createUserWithEmailAndPassword(email, password)
+                    .catch(function (error) {
+                        // Handle Errors here.
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        alert(errorMessage);
+                        // ...
+                    });
+            }
+        };
 
-                        var template_form =
-                            `<div class="card">
-                                <img class="card-img-top" src="./images/${gymImage}.jpg">
-                                <img class="card-img-top width=100px height=100px">
-                                <div class="card-body">
-                                <h5 class="card-title" id="id_${gymName}">${gymName}</h5>
-                                <p class="card-address">${gymAddress}</p>
-                                <p class="link-primary" onclick="gotoReview('${gymName}')">Write a review</a>
-                                <br>
-                                <p class="card-text">${gymDescription}</p>
-                                <a href="#" class="btn btn-primary" onclick="setGymData('${gymName}')" style="float: right"> Read
-                                    more</a>
-                                </div>
-                                </div>`
-                        $(".card-group").append(template_form);
-                    })
+        document.querySelector("#register").addEventListener("click", () => {
+            register();
+        })
 
-                })
-        }
-        displayGyms();
-
-        function setGymData(gymName) {
-            console.log(gymName)
-            localStorage.setItem('gymName', gymName);
-            move_to_gym_overview()
-            console.log("clicked")
-        }
-
-        function gotoReview(gymName) {
-            console.log(gymName)
-            localStorage.setItem('gymID', gymName);
-            // location.replace("review.html")
-            console.log(gymName)
-            console.log("clicked")
-            window.open('review.html', "_blank");
-
-        }
-
-        // listener for the signout link
-        document.getElementById("signout").addEventListener("click", logout);
     </script>
 
 </body>

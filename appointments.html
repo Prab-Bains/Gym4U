@@ -23,12 +23,14 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
 
-
     <!-- Link to the api keys for your firebase project -->
     <script src="scripts/firebaseAPI_DTC11.js"></script>
 
     <!-- Our Own CSS-->
     <link rel="stylesheet" type="text/css" href="./styles/my_style.css">
+
+    <!-- Our own JS -->
+    <script src="./scripts/sidebarmenu.js"></script>
     <title>Gym4U</title>
 </head>
 
@@ -55,6 +57,7 @@
                             <li class="list-group-item"><a href="listings.html">Listings</a></li>
                             <li class="list-group-item"><a href="#">Appointments</a></li>
                             <li class="list-group-item"><a href="help.html">Help</a></li>
+                            <li class="list-group-item"><a id="signout">Sign Out</a></li>
                         </ul>
                     </div>
                 </div>
@@ -62,10 +65,10 @@
         </div>
     </nav>
     <div id="appointment_button_group" style="text-align: center;">
-    <button class="btn btn-secondary" id="openBtn">Add appointment</button>
-    <button class="btn btn-secondary" onClick="readAppointmentList()">Refresh</button>
-    
-    
+        <button class="btn btn-secondary" id="openBtn">Add appointment</button>
+        <button class="btn btn-secondary" onClick="readAppointmentList()">Refresh</button>
+
+
     </div>
     <div class="appointment_container" style="text-align: center;">
     </div>
@@ -104,8 +107,8 @@
 
     <script>
 
-        function moveToPage(id, detail, aim){
-            window.location.href="test.html?id=" + id;
+        function moveToPage(id, detail, aim) {
+            window.location.href = "test.html?id=" + id;
         }
 
         $("#panenl1").toggle(1000).toggle(1000)
@@ -212,6 +215,10 @@
         document.querySelector("#openBtn").addEventListener("click", open);
         document.querySelector("#closeBtn").addEventListener("click", close);
         document.querySelector(".bg").addEventListener("click", close);
+
+        // listener for the signout link
+        document.getElementById("signout").addEventListener("click", logout);
     </script>
 </body>
+
 </html>
