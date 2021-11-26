@@ -208,7 +208,6 @@
                     alert("no user sign-in");
                 }
             })
-            readAppointmentList()
         }
 
         function readAppointmentList() {
@@ -222,12 +221,7 @@
                             var appointment_list = doc.data();
                             const key_list = Object.keys(appointment_list);
                             let lengthOfAppointmentList = Object.keys(appointment_list).length;
-                            console.log(lengthOfAppointmentList)
 
-                            for (var i = lengthOfAppointmentList; i > 0; i--) {
-                                console.log('a' + i)
-                            }
-                            var value = appointment_list[key_list[0]];
                             for (var i = lengthOfAppointmentList; i > 0; i--) {
                                 pointer = 'a' + i;
                                 date = appointment_list[pointer]['date'];
