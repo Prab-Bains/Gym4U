@@ -25,9 +25,13 @@
 
     <!-- Link to the api keys for your firebase project -->
     <script src="scripts/firebaseAPI_DTC11.js"></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyxi2mvCi3OBv6XCmgbK5urtpdu0Wz_gw
+        &libraries=visualization&callback=initMap">
+        </script>
 
     <!-- Our own JS files-->
     <script src="./scripts/sidebarmenu.js"></script>
+    <script src="./scripts/main.js"></script>
 
     <title>Gym4U</title>
 </head>
@@ -73,6 +77,7 @@
             <p>Ready to start having cheaper, more convenient workouts?</p>
             <p>Check out some places near you.</p>
         </h3>
+        <div id="map"></div>
         <button type="button" class="btn btn-lg px-4 gap-3"><a href="listings.html">Listings</a></button>
     </div>
 
@@ -115,10 +120,7 @@
         }
         insertName();
 
-        // listener for the signout link
-        document.getElementById("signout").addEventListener("click", logout);
-
-    </script>
+        </script>
 
 </body>
 
