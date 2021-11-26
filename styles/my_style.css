@@ -216,3 +216,9 @@ a:visited {
 .signup_message{
     text-align: center;
 }
+
+#form-group{
+    background-color: black;
+    border-bottom: #00e6d0;
+    color: white;
+}
