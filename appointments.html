@@ -147,8 +147,14 @@
                     var target_object_key = id.slice(-2);
                     currentDB.get().then(doc => {
                         var appointment_list = doc.data();
-                        let new_appointment_list = appointment_list;
-                        delete new_appointment_list[target_object_key];
+                        delete appointment_list[target_object_key];
+                        let new_appointment_list = new Object({})
+                        let lengthOfAppointmentList = Object.keys(appointment_list).length;
+                        var i = 1
+                        for (val in appointment_list) {
+                            new_appointment_list['a'+i] = appointment_list[val] 
+                            i++;      
+                        }
                         console.log(new_appointment_list)
                         currentDB.set(new_appointment_list);
                     })
@@ -268,5 +274,4 @@
         document.getElementById("signout").addEventListener("click", logout);
     </script>
 </body>
-
 </html>
