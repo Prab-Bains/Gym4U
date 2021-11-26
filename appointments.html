@@ -98,7 +98,6 @@
             </div>
         </div>
     </div>
-    <button onclick="moveToPage('a','b','c')">Hello, test.html</button>
 
     <footer id="bottom_nav">
         <div>
@@ -107,38 +106,52 @@
     </footer>
 
     <script>
+        function UpdateAppointment(id) {
+            firebase.auth().onAuthStateChanged(user => {
+                if (user) {
+                    var uid = user.uid;
+                    var currentDB = db.collection("appointment_dictionary").doc(uid)
+                    currentDB.get().then(doc => {
+                        var target_object_key = id.slice(-2);
+                        var appointment_list = doc.data();
+                        let new_appointment_list = appointment_list;
 
-        function moveToPage(id, detail, aim) {
-            window.location.href = "test.html?id=" + id;
+                        var date_id = "date_id_" + id.slice(-2)
+                        var to_time_id = "to_time_id_" + id.slice(-2)
+                        var from_time_id = "from_time_id_" + id.slice(-2)
+                        var gym_name_id = "gym_name_id_" + id.slice(-2)
+
+                        var date_value = $("#" + date_id).val();
+                        var to_time_value = $("#" + to_time_id).val();
+                        var from_time_value = $("#" + from_time_id).val();
+                        var gym_name_id_value = $("#" + gym_name_id).text();
+
+                        let appointment_info_object = new Object({
+                            date: date_value,
+                            start_time: from_time_value,
+                            end_time: to_time_value,
+                            gym_name: gym_name_id_value
+                        });
+
+                        new_appointment_list[target_object_key] = appointment_info_object;
+                        currentDB.set(new_appointment_list);
+                    })
+                }
+            })
         }
-
-        $("#panenl1").toggle(1000).toggle(1000)
 
         function removeAppointment(id) {
             firebase.auth().onAuthStateChanged(user => {
                 if (user) {
                     var uid = user.uid
-                    var currentDB = db.collection("appointments").doc(uid)
-
-                    var date_id = "date_id_" + id.slice(-1)
-                    var to_time_id = "to_time_id_" + id.slice(-1)
-                    var from_time_id = "from_time_id_" + id.slice(-1)
-                    var gym_name_id = "gym_name_id_" + id.slice(-1)
-
-                    var date_value = $("#" + date_id).text();
-                    var to_time_value = $("#" + to_time_id).text();
-                    var from_time_value = $("#" + from_time_id).text();
-                    var gym_name_id_value = $("#" + gym_name_id).text();
-
-                    let appointment_info_object = new Object({
-                        date: date_value,
-                        start_time: from_time_value,
-                        end_time: to_time_value,
-                        gym_name: gym_name_id_value
-                    });
-
-                    currentDB.update({
-                        appointment_list: firebase.firestore.FieldValue.arrayRemove(appointment_info_object)
+                    var currentDB = db.collection("appointment_dictionary").doc(uid)
+                    var target_object_key = id.slice(-2);
+                    currentDB.get().then(doc => {
+                        var appointment_list = doc.data();
+                        let new_appointment_list = appointment_list;
+                        delete new_appointment_list[target_object_key];
+                        console.log(new_appointment_list)
+                        currentDB.set(new_appointment_list);
                     })
                     alert("Succesfully, remove appointment.")
                 }
@@ -149,27 +162,47 @@
             firebase.auth().onAuthStateChanged(user => {
                 if (user) {
                     var uid = user.uid
-                    var currentDB = db.collection("appointments").doc(uid)
-
-                    let gymname = document.getElementById("id_gymname").value;
-                    let from_time = document.getElementById("id_from_time").value;
-                    let to_time = document.getElementById("id_to_time").value;
-                    let date = document.getElementById("id_date").value;
-
-                    let appointment_info_object = new Object({
-                        date: date,
-                        start_time: from_time,
-                        end_time: to_time,
-                        gym_name: gymname
-                    });
-                    currentDB.update({
-                        appointment_list: firebase.firestore.FieldValue.arrayUnion(appointment_info_object)
+                    var currentDB = db.collection("appointment_dictionary").doc(uid)
+                    currentDB.get().then(doc => {
+                        if (doc.exists) {
+                            var appointment_list = doc.data();
+                            let lengthOfAppointmentList = Object.keys(appointment_list).length + 1;
+                            let gymname = document.getElementById("id_gymname").value;
+                            let from_time = document.getElementById("id_from_time").value;
+                            let to_time = document.getElementById("id_to_time").value;
+                            let date = document.getElementById("id_date").value;
+                            let pointer = 'a' + lengthOfAppointmentList
+                            let new_appointment_list = appointment_list;
+                            let new_appointment_info = new Object({
+                                date: date,
+                                start_time: from_time,
+                                end_time: to_time,
+                                gym_name: gymname
+                            });
+                            new_appointment_list[pointer] = new_appointment_info;
+                            currentDB.set(new_appointment_list);
+                        } else {
+                            let gymname = document.getElementById("id_gymname").value;
+                            let from_time = document.getElementById("id_from_time").value;
+                            let to_time = document.getElementById("id_to_time").value;
+                            let date = document.getElementById("id_date").value;
+                            let new_appointment_info = new Object({
+                                'a1' : {
+                                date: date,
+                                start_time: from_time,
+                                end_time: to_time,
+                                gym_name: gymname
+                                }
+                            });
+                            currentDB.set(new_appointment_info);
+                        }
                     })
-                    alert("Succesfully, add appointment.")
+
                 } else {
                     alert("no user sign-in");
                 }
             })
+            readAppointmentList()
         }
 
         function readAppointmentList() {
@@ -177,34 +210,49 @@
             firebase.auth().onAuthStateChanged(user => {
                 if (user) {
                     var uid = user.uid
-                    var currentDB = db.collection("appointments").doc(uid)
-                    currentDB.get()
-                        .then(appointmentListdoc => {
-                            var list = appointmentListdoc.data().appointment_list
-                            for (let i = list.length - 1; i > -1; i--) {
-                                date = list[i]["date"];
-                                end_time = list[i]["end_time"];
-                                start_time = list[i]["start_time"];
-                                gym_name = list[i]["gym_name"];
+                    var currentDB = db.collection("appointment_dictionary").doc(uid)
+                    currentDB.get().then(doc => {
+                        if (doc.exists) {
+                            var appointment_list = doc.data();
+                            const key_list = Object.keys(appointment_list);
+                            let lengthOfAppointmentList = Object.keys(appointment_list).length;
+                            console.log(lengthOfAppointmentList)
+
+                            for (var i = lengthOfAppointmentList; i > 0; i--) {
+                                console.log('a' + i)
+                            }
+                            var value = appointment_list[key_list[0]];
+                            for (var i = lengthOfAppointmentList; i > 0; i--) {
+                                pointer = 'a' + i;
+                                date = appointment_list[pointer]['date'];
+                                end_time = appointment_list[pointer]["end_time"];
+                                start_time = appointment_list[pointer]["start_time"];
+                                gym_name = appointment_list[pointer]["gym_name"];
                                 var containerform =
-                                    `<div class="card text-white bg-secondary mb-5" style="max-width: 18rem;">
-                                        <div class="card-header" id="gym_name_id_${i}">${gym_name}</div>
+                                    `<div class="card text-white bg-secondary mb-5" id="${pointer}" style="max-width: 18rem;">
+                                        <div class="card-header" id="gym_name_id_${pointer}">${gym_name}</div>
                                             <div class="card-body">
-                                                <h5 class="card-title">Date : </h5><h5 id="date_id_${i}">${date}</h5></h5>
-                                                <p class="card-text">Start time : <span id="from_time_id_${i}">${start_time}</span></p>
-                                                <p class="card-text">End time : <span id="to_time_id_${i}">${end_time}</span></p>
-                                                <button id="deleteButton_${i}" class="btn btn-secondary" onclick="removeAppointment(this.id)">Remove</button>
+                                                <h5 class="card-title">Date :</h5>
+                                                <input type="date" id="date_id_${pointer}" value="${date}">
+                                                <p class="card-text">Start time :<input type="time" id="from_time_id_${pointer}" value="${start_time}"></p>
+                                                <p class="card-text">Start time :<input type="time" id="to_time_id_${pointer}" value="${end_time}"></p>
+                                                <button id="deleteButton_${pointer}" class="btn btn-secondary" onclick="removeAppointment(this.id)">Remove</button>
+                                                <button id="deleteButton_${pointer}" class="btn btn-secondary" onclick="UpdateAppointment(this.id)">Update</button>
                                             </div>
                                     </div>`;
                                 $(".appointment_container").append(containerform);
                             }
-                        })
+                        } else {
+                            console.log("No such data")
+                        }
+                    })
                 } else {
                     alert("no user sign-in");
                 }
             })
         }
         readAppointmentList();
+
 
         const open = () => {
             document.querySelector(".modal").classList.remove("hidden");
