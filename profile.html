@@ -29,6 +29,7 @@
 
     <!-- Our own JS files-->
     <script src="./scripts/sidebarmenu.js"></script>
+    <script src="./scripts/profile.js"></script>
 
     <title>Gym4U</title>
 </head>
@@ -130,129 +131,29 @@
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-
         </script>
 
     <script>
-        var currentUser
-
-        function insertName() {
-            firebase.auth().onAuthStateChanged(user => {
-                // Check if user is signed in:
-                if (user) {
-                    // Do something for the current logged-in user here:
-                    console.log(user.uid);
-                    //go to the correct user document by referencing to the user uid
-                    currentUser = db.collection("users").doc(user.uid);
-                    //get the document for current user.
-                    currentUser.get()
-                        .then(userDoc => {
-                            var userName = userDoc.data().name;
-                            console.log(userName);
-                            //method #1:  insert with html only
-                            //document.getElementById("name-goes-here").innerText = n;    //using javascript
-                            //method #2:  insert using jquery
-                            $("#name-goes-here").text(userName);                         //using jquery
-                        })
-                } else {
-                    // No user is signed in.
-                }
-            });
-        }
-        insertName();
-
-        function populateInfo() {
-            firebase.auth().onAuthStateChanged(user => {
-                // Check if user is signed in:
-                if (user) {
-
-                    //go to the correct user document by referencing to the user uid
-                    currentUser = db.collection("users").doc(user.uid)
-                    //get the document for current user.git pi
-                    currentUser.get()
-                        .then(userDoc => {
-                            //get the data fields of the user
-                            var userName = userDoc.data().name;
-                            console.log(userName);
-                            var userBirthday = userDoc.data().userBirthday;
-                            var userEmail = userDoc.data().email;
-                            var userCity = userDoc.data().city;
-                            var userType = userDoc.data().usertype;
-
-                            //if the data fields are not empty, then write them in to the form.
-                            if (userName != null) {
-                                document.getElementById("nameInput").value = userName;
-                            }
-                            if (userBirthday != null) {
-                                document.getElementById("birthdayInput").value = userBirthday;
-                            }
-                            if (userEmail != null) {
-                                document.getElementById("emailInput").value = userEmail;
-                            }
-                            if (userCity != null) {
-                                document.getElementById("cityInput").value = userCity;
-                            }
-                            if (userType != null) {
-                                document.querySelector('input[name="userType"]:checked').value = userType;
-                            }
-                        })
-                } else {
-                    // No user is signed in.
-                    console.log("No user is signed in");
-                }
-            });
-        }
-
-        //call the function to run it
-        populateInfo();
-
-        function editUserInfo() {
-            //Enable the form fields
-            document.getElementById('personalInfoFields').disabled = false;
-        }
-
-        function saveUserInfo() {
-            //console.log("Save is clicked")
-            //grab info that user input in each field
-            userName = document.getElementById('nameInput').value;
-            userBirthday = document.getElementById('birthdayInput').value;
-            userEmail = document.getElementById('emailInput').value;
-            userCity = document.getElementById('cityInput').value;
-            userType = document.querySelector('input[name="userType"]:checked').value;
-
-            //console.log("Values are:", userName, userSchool, UserCity)
-            //write the values in the database:
-            currentUser.set({
-                name: userName,
-                birthday: userBirthday,
-                email: userEmail,
-                city: userCity,
-                type: userType
-            })
-                .then(() => {
-                    console.log("Document successfully updated!");
-                })
-            document.getElementById('personalInfoFields').disabled = true;
-
-        }
 
         function AddUploadListener(profileID) {
             const fileInput = document.getElementById(profileID + "profilepicfile"); // pointer #1
-            const image = document.getElementById(profiletID + "profilepic"); // pointer #2
+            const image = document.getElementById(profileID + "profilepic"); // pointer #2
 
             //attach listener to input file
             //when this file changes, do something
-            fileInput.addEventListener('change', function (e) {
+            if (fileInput) {
+                fileInput.addEventListener('change', function (e) {
 
-                //the change event returns a file "e.target.files[0]"
-                var blob = URL.createObjectURL(e.target.files[0]);
+                    //the change event returns a file "e.target.files[0]"
+                    var newpic = URL.createObjectURL(e.target.files[0]);
 
-                //change the DOM img element source to point to this file
-                image.src = blob; //assign the "src" property of the "img" tag
+                    //change the DOM img element source to point to this file
+                    image.src = newpic; //assign the "src" property of the "img" tag
 
-                //do database stuff:  add to menu collection
-                AddNewProfilePic(profileID);
-            })
+                    //do database stuff:  add to menu collection
+                    AddNewProfilePic(profileID);
+                })
+            }
         }
 
         AddUploadListener("profile");
@@ -261,12 +162,16 @@
             firebase.auth().onAuthStateChanged(function (user) {
                 if (user) {
                     // User is signed in.
-                    // Add a new menu to the "menu's collection
+                    var profilepic = document.getElementById('profilepic').value;
+                    currentUser.set({
+                        profilepic: profilepic
+                    })
 
                     addProfileDoc(profileID, user.uid);
 
                 } else {
                     // No user is signed in.
+                    console.log("No user is signed in");
                 }
             });
         }
@@ -288,8 +193,23 @@
                 })
         }
 
+        //----------------------------------------------------------------------
+        // Add the profile picture's id to the "posted" field for that user
+        // The field "posted" is an array of the list of posts the user has made
+        //----------------------------------------------------------------------
+        function updateUserDoc(profileid, useruid, pickefile) {
+            db.collection("users").doc(useruid).set({
+                posted: firebase.firestore.FieldValue.arrayUnion(menuid)
+            }, {
+                merge: true
+            })
+                .then(function () {
+                    storeImage(profileid, pickedfile);
+                })
+        }
+
         function storeImage(profilepicid, pickedfile) {
-            var storageRef = firebase.storage().ref("images/" + menuid + ".jpg"); // Get reference
+            var storageRef = firebase.storage().ref("images/" + profileid + ".jpg"); // Get reference
             var metadata = {
                 contentType: 'image/jpeg',
             };
