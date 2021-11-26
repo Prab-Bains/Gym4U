@@ -33,23 +33,26 @@ body {
 }
 
 
-.btn {
+.btn, .openBtn {
     background-color: #00e6d0;
+    border: #00e6d0;
+    box-shadow: 0;
+    padding: 2px;
 }
 
-.btn:hover {
+.btn,.opnBtd:hover {
     background-color: black;
     color: white;
     border: white;
 }
 
+.btn-close {
+    background-color: #00e6d0;
+}
+
 .offcanvas {
     background-color: black;
     border: 5px solid #00e6d0;
-}
-
-.btn-close {
-    background-color: #00e6d0;
 }
 
 .list-group-item {
@@ -77,7 +80,6 @@ body {
 }
 
 .sign-image {
-
     vertical-align: middle;
 }
 
@@ -201,3 +203,7 @@ a:visited {
   .highlight {
     color: white;
   }
+
+.card{
+    width:90%;
+    }
