@@ -69,10 +69,9 @@
 
     <div class="container">
         <h1><span id="name-goes-here">New User</span>'s Profile </h1>
-        <div class="card-body">
-            <img id="profilepic" src="./images/blank-profile-picture-973460_640.png" width="100" height="100" /> <br />
-            <button class="btn" onclick="document.getElementById('profilepicfile').click()">Upload Photo</button>
-            <input type="file" id="profilepicfile" style="display:none">
+        <div class="container text-center py-3">
+            <img id="mypic-goes-here" src="/images/blank-profile-picture-973460_640.png" width="50" height="50" />
+            <input type="file" id="mypic-input" accept="image/*" />
         </div>
         <form>
             <fieldset class="mb-3" id="personalInfoFields" disabled>
@@ -136,9 +135,9 @@
 
     <script>
 
-        function AddUploadListener(profileID) {
-            const fileInput = document.getElementById(profileID + "profilepicfile"); // pointer #1
-            const image = document.getElementById(profileID + "profilepic"); // pointer #2
+        function showUpdloadedPicture() {
+            const fileInput = document.getElementById("mypic-input"); // pointer #1
+            const image = document.getElementById("mypic-goes-here"); // pointer #2
 
             //attach listener to input file
             //when this file changes, do something
@@ -150,99 +149,87 @@
 
                     //change the DOM img element source to point to this file
                     image.src = newpic; //assign the "src" property of the "img" tag
-
-                    //do database stuff:  add to menu collection
-                    AddNewProfilePic(profileID);
                 })
             }
         }
 
-        AddUploadListener("profile");
-
-        function RegisterNewProfile(profileID) {
-            firebase.auth().onAuthStateChanged(function (user) {
-                if (user) {
-                    // User is signed in.
-                    var profilepic = document.getElementById('profilepic').value;
-                    currentUser.set({
-                        profilepic: profilepic
-                    })
-
-                    addProfileDoc(profileID, user.uid);
-
-                } else {
-                    // No user is signed in.
-                    console.log("No user is signed in");
-                }
-            });
-        }
-
-        //--------------------------------------------------
-        // Create a new profile doc
-        //--------------------------------------------------
-        function addProfilePicDoc(profileid, userid) {
-            //create the menu document first
-            db.collection("profilepics").add({
-                name: profileid,
-                uploader: userid,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            })
-                .then(function (doc) {
-                    //"doc" points to the newly created menu document
-                    // and doc.id is the auto-generated id for that menu
-                    updateUserDoc(doc.id, userid);
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                fileButton.addEventListener('change', function (e) {       //event listener
+                    const pickedfile = e.target.files[0];  // file that user picked
+                    image.src = URL.createObjectURL(pickedfile); //event handler
                 })
-        }
+            } else {
+                // No user is signed in.
+            }
+        });
 
-        //----------------------------------------------------------------------
-        // Add the profile picture's id to the "posted" field for that user
-        // The field "posted" is an array of the list of posts the user has made
-        //----------------------------------------------------------------------
-        function updateUserDoc(profileid, useruid, pickefile) {
-            db.collection("users").doc(useruid).set({
-                posted: firebase.firestore.FieldValue.arrayUnion(menuid)
-            }, {
-                merge: true
-            })
-                .then(function () {
-                    storeImage(profileid, pickedfile);
-                })
-        }
-
-        function storeImage(profilepicid, pickedfile) {
-            var storageRef = firebase.storage().ref("images/" + profileid + ".jpg"); // Get reference
-            var metadata = {
-                contentType: 'image/jpeg',
-            };
-
-            // Upload picked file to cloud storage
-            storageRef.put(pickedfile, metadata)
-                .then(function () {
-                    storageRef.getDownloadURL() //get URL of the uploade file
-                        .then(function (url) {
-                            console.log(url); // Save the URL into users collection
-                            db.collection("profilepics").doc(profileid).update({
-                                "profilepic": url
-                            })
+        var storageRef = firebase.storage().ref("images/" + user.uid + ".jpg"); // Get reference
+        // Upload picked file to cloud storage
+        storageRef.put(pickedfile)
+            .then(function () {
+                storageRef.getDownloadURL()
+                    .then(function (url) { // Get URL of the uploaded file
+                        console.log(url); // Save the URL into users collection
+                        db.collection("users").doc(user.uid).update({
+                            "profile-pic": url
                         })
-                });
-
-        }
-
-        function displayProfilePic(profileID) {
-            db.collection("profilepics").where("name", "==", profileID)
-                .get()
-                .then(function (snap) {
-                    snap.forEach(function (doc) {
-                        //console.log(doc.data());
-                        var profilePic = doc.data().profilepic;
-                        //console.log("#" + doc.data().name + "menu");
-                        //console.log(menuPic);
-                        $("#" + doc.data().name + "profile pic").attr("src", profilePic);
                     })
+            })
+
+        function uploadUserProfilePic() {
+            // Let's assume my storage is only enabled for authenticated users
+            // This is set in your firebase console storage "rules" tab
+
+            firebase.auth().onAuthStateChanged(function (user) {
+                var fileInput = document.getElementById("mypic-input");   // pointer #1
+                const image = document.getElementById("mypic-goes-here"); // pointer #2
+
+                // listen for file selection
+                fileInput.addEventListener('change', function (e) {
+                    var file = e.target.files[0];
+                    var blob = URL.createObjectURL(file);
+                    image.src = blob;            // display this image
+
+                    //store using this name
+                    var storageRef = storage.ref("images/" + user.uid + ".jpg");
+
+                    //upload the picked file
+                    storageRef.put(file)
+                        .then(function () {
+                            console.log('Uploaded to Cloud Storage.');
+                        })
+
+                    //get the URL of stored file
+                    storageRef.getDownloadURL()
+                        .then(function (url) {   // Get URL of the uploaded file
+                            console.log(url);    // Save the URL into users collection
+                            db.collection("users").doc(user.uid).update({
+                                "profilePic": url
+                            })
+                                .then(function () {
+                                    console.log('Added Profile Pic URL to Firestore.');
+                                })
+                        })
                 })
+            })
         }
-        displayProfilePic("profile");
+        uploadUserProfilePic();
+
+        function displayUserProfilePic() {
+            console.log("hi");
+            firebase.auth().onAuthStateChanged(function (user) {      //get user object
+                db.collection("users").doc(user.uid)                  //use user's uid
+                    .get()                                            //READ the doc
+                    .then(function (doc) {
+                        var picUrl = doc.data().profilePic;           //extract pic url
+
+                        // use this line if "mypic-goes-here" is an "img"
+                        $("#mypic-goes-here").attr("src", picUrl);
+                    })
+            })
+        }
+        displayUserProfilePic();
 
         // listener for the signout link
         document.getElementById("signout").addEventListener("click", logout);
