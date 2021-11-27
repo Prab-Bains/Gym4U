@@ -22,9 +22,14 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
 
     <!-- Link to the api keys for your firebase project -->
     <script src="scripts/firebaseAPI_DTC11.js"></script>
+
+    <!-- Our own JS files-->
+    <script src="./scripts/sidebarmenu.js"></script>
+    <script src="./scripts/profile.js"></script>
 
     <title>Gym4U</title>
 </head>
@@ -47,12 +52,13 @@
                         aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
-                    <div class="card" style="width: 100%;">
+                    <div class="card">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><a href="profile.html">Profile</a></li>
                             <li class="list-group-item"><a href="listings.html">Listings</a></li>
                             <li class="list-group-item"><a href="appointments.html">Appointments</a></li>
                             <li class="list-group-item"><a href="help.html">Help</a></li>
+                            <li class="list-group-item"><a id="signout">Sign Out</a></li>
                         </ul>
                     </div>
                 </div>
@@ -61,7 +67,12 @@
     </nav>
 
     <div class="container">
-        <h1><span id="name-goes-here"></span>'s Profile </h1>
+        <h1><span id="name-goes-here">New User</span>'s Profile </h1>
+        <div class="card-body">
+            <img id="profilepic" src="./images/blank-profile-picture-973460_640.png" width="100" height="100" /> <br />
+            <button class="btn" onclick="document.getElementById('profilepicfile').click()">Upload Photo</button>
+            <input type="file" id="profilepicfile" style="display:none">
+        </div>
         <form>
             <fieldset class="mb-3" id="personalInfoFields" disabled>
                 <div class="form-group">
@@ -70,8 +81,8 @@
                 </div>
                 <br />
                 <div class="form-group">
-                <label for="birthday">Birthday:</label><br />
-                <input type="date" id="birthdayInput" name="birthday">
+                    <label for="birthday">Birthday:</label><br />
+                    <input type="date" id="birthdayInput" name="birthday">
                 </div>
                 <br />
                 <div class="form-group">
@@ -112,81 +123,52 @@
 
     <footer id="bottom_nav">
         <div>
-            <h5 style="text-align: center;">Terms and Conditions</h5>
+            &#169; Gym4U
         </div>
-
     </footer>
 
 
-      <!-- Option 1: Bootstrap Bundle with Popper -->
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-
-  </script>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+        </script>
 
     <script>
-        var currentUser
 
-        function insertName() {
-            firebase.auth().onAuthStateChanged(user => {
-                // Check if user is signed in:
-                if (user) {
-                    // Do something for the current logged-in user here:
-                    console.log(user.uid);
-                    //go to the correct user document by referencing to the user uid
-                    currentUser = db.collection("users").doc(user.uid);
-                    //get the document for current user.
-                    currentUser.get()
-                        .then(userDoc => {
-                            var userName = userDoc.data().name;
-                            console.log(userName);
-                            //method #1:  insert with html only
-                            //document.getElementById("name-goes-here").innerText = n;    //using javascript
-                            //method #2:  insert using jquery
-                            $("#name-goes-here").text(userName);                         //using jquery
-                        })
-                } else {
-                    // No user is signed in.
-                }
-            });
+        function AddUploadListener(profileID) {
+            const fileInput = document.getElementById(profileID + "profilepicfile"); // pointer #1
+            const image = document.getElementById(profileID + "profilepic"); // pointer #2
+
+            //attach listener to input file
+            //when this file changes, do something
+            if (fileInput) {
+                fileInput.addEventListener('change', function (e) {
+
+                    //the change event returns a file "e.target.files[0]"
+                    var newpic = URL.createObjectURL(e.target.files[0]);
+
+                    //change the DOM img element source to point to this file
+                    image.src = newpic; //assign the "src" property of the "img" tag
+
+                    //do database stuff:  add to menu collection
+                    AddNewProfilePic(profileID);
+                })
+            }
         }
-        insertName();
 
-        function populateInfo() {
-            firebase.auth().onAuthStateChanged(user => {
-                // Check if user is signed in:
+        AddUploadListener("profile");
+
+        function RegisterNewProfile(profileID) {
+            firebase.auth().onAuthStateChanged(function (user) {
                 if (user) {
+                    // User is signed in.
+                    var profilepic = document.getElementById('profilepic').value;
+                    currentUser.set({
+                        profilepic: profilepic
+                    })
 
-                    //go to the correct user document by referencing to the user uid
-                    currentUser = db.collection("users").doc(user.uid)
-                    //get the document for current user.git pi
-                    currentUser.get()
-                        .then(userDoc => {
-                            //get the data fields of the user
-                            var userName = userDoc.data().name;
-                            console.log(userName);
-                            var userBirthday = userDoc.data().userBirthday;
-                            var userEmail = userDoc.data().email;
-                            var userCity = userDoc.data().city;
-                            var userType = userDoc.data().usertype;
+                    addProfileDoc(profileID, user.uid);
 
-                            //if the data fields are not empty, then write them in to the form.
-                            if (userName != null) {
-                                document.getElementById("nameInput").value = userName;
-                            }
-                            if (userBirthday != null) {
-                                document.getElementById("birthdayInput").value = userBirthday;
-                            }
-                            if (userEmail != null) {
-                                document.getElementById("emailInput").value = userEmail;
-                            }
-                            if (userCity != null) {
-                                document.getElementById("cityInput").value = userCity;
-                            }
-                            if (userType != null) {
-                                document.querySelector('input[name="userType"]:checked').value = userType;
-                            }
-                        })
                 } else {
                     // No user is signed in.
                     console.log("No user is signed in");
@@ -194,38 +176,75 @@
             });
         }
 
-        //call the function to run it
-        populateInfo();
-
-        function editUserInfo() {
-            //Enable the form fields
-            document.getElementById('personalInfoFields').disabled = false;
-        }
-
-        function saveUserInfo() {
-            //console.log("Save is clicked")
-            //grab info that user input in each field
-            userName = document.getElementById('nameInput').value;
-            userBirthday = document.getElementById('birthdayInput').value;
-            userEmail = document.getElementById('emailInput').value;
-            userCity = document.getElementById('cityInput').value;
-            userType = document.querySelector('input[name="userType"]:checked').value;
-
-            //console.log("Values are:", userName, userSchool, UserCity)
-            //write the values in the database:
-            currentUser.update({
-                name: userName,
-                birthday: userBirthday,
-                email: userEmail,
-                city: userCity,
-                type: userType
+        //--------------------------------------------------
+        // Create a new profile doc
+        //--------------------------------------------------
+        function addProfilePicDoc(profileid, userid) {
+            //create the menu document first
+            db.collection("profilepics").add({
+                name: profileid,
+                uploader: userid,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
             })
-                .then(() => {
-                    console.log("Document successfully updated!");
+                .then(function (doc) {
+                    //"doc" points to the newly created menu document
+                    // and doc.id is the auto-generated id for that menu
+                    updateUserDoc(doc.id, userid);
                 })
-            document.getElementById('personalInfoFields').disabled = true;
+        }
+
+        //----------------------------------------------------------------------
+        // Add the profile picture's id to the "posted" field for that user
+        // The field "posted" is an array of the list of posts the user has made
+        //----------------------------------------------------------------------
+        function updateUserDoc(profileid, useruid, pickefile) {
+            db.collection("users").doc(useruid).set({
+                posted: firebase.firestore.FieldValue.arrayUnion(menuid)
+            }, {
+                merge: true
+            })
+                .then(function () {
+                    storeImage(profileid, pickedfile);
+                })
+        }
+
+        function storeImage(profilepicid, pickedfile) {
+            var storageRef = firebase.storage().ref("images/" + profileid + ".jpg"); // Get reference
+            var metadata = {
+                contentType: 'image/jpeg',
+            };
+
+            // Upload picked file to cloud storage
+            storageRef.put(pickedfile, metadata)
+                .then(function () {
+                    storageRef.getDownloadURL() //get URL of the uploade file
+                        .then(function (url) {
+                            console.log(url); // Save the URL into users collection
+                            db.collection("profilepics").doc(profileid).update({
+                                "profilepic": url
+                            })
+                        })
+                });
 
         }
+
+        function displayProfilePic(profileID) {
+            db.collection("profilepics").where("name", "==", profileID)
+                .get()
+                .then(function (snap) {
+                    snap.forEach(function (doc) {
+                        //console.log(doc.data());
+                        var profilePic = doc.data().profilepic;
+                        //console.log("#" + doc.data().name + "menu");
+                        //console.log(menuPic);
+                        $("#" + doc.data().name + "profile pic").attr("src", profilePic);
+                    })
+                })
+        }
+        displayProfilePic("profile");
+
+        // listener for the signout link
+        document.getElementById("signout").addEventListener("click", logout);
     </script>
 
 </body>
