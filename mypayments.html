@@ -100,7 +100,7 @@
                 <input type="text" id="billing_id" placeholder="Enter your billing address" width="100px" name="billing"
                     required>
                 <button type="button" class="btn btn-lg px-4 gap-3" onClick="addCreditCard()">Save Card</button>
-                <button class="closeBtn">✖</button>
+                <button id="closeBtn">✖</button>
             </div>
         </div>
     </div>
@@ -309,8 +309,8 @@
             readCardList();
         }
 
-        document.querySelector(".openBtn").addEventListener("click", open);
-        document.querySelector(".closeBtn").addEventListener("click", close);
+        document.querySelector("#openBtn").addEventListener("click", open);
+        document.querySelector("#closeBtn").addEventListener("click", close);
         document.querySelector(".bg").addEventListener("click", close);
 
 

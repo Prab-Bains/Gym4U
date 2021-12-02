@@ -26,7 +26,6 @@
 
     <!-- Link to the api keys for your firebase project -->
     <script src="scripts/firebaseAPI_DTC11.js"></script>
-    <script src="scripts/appointment.js"></script>
 
     <!-- Our Own CSS-->
     <link rel="stylesheet" type="text/css" href="./styles/my_style.css">
@@ -99,7 +98,7 @@
                     <input type="date" id="id_date" name="appt"><br>
                     <button type="button" class="btn btn-secondary" onClick="addAppointment()">Add
                         appointment!</button>
-                    <button class="btn btn-secondary" id="closeBtn">✖</button>
+                    <button id="closeBtn">✖</button>
                 </div>
             </div>
         </div>
@@ -118,10 +117,12 @@
 
 
     <script>
-        let open = () => {
+        readAppointmentList();
+
+        const open = () => {
             document.querySelector(".modal").classList.remove("hidden");
         }
-        let close = () => {
+        const close = () => {
             document.querySelector(".modal").classList.add("hidden");
             readAppointmentList();
         }
