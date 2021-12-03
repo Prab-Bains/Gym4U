@@ -49,11 +49,13 @@
                             i++;
                         }
                         console.log(new_appointment_list)
-                        currentDB.set(new_appointment_list);
+                        currentDB.set(new_appointment_list).then (
+                            readAppointmentList()
+                        );
                     })
-                    alert("Succesfully, remove appointment.")
                 }
             })
+            alert("Succesfully, remove appointment.")
         }
 
         function addAppointment() {
