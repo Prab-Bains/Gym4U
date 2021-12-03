@@ -1,5 +1,5 @@
 function move_to_gym_overview() {
-    var link = 'gymoverview.html'
+    var link = 'gymOverview.html'
     location.replace(link);
 }
 
