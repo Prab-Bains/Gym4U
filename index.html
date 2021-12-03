@@ -2,7 +2,9 @@
 <html lang="en">
 
 <head>
+    <!-- favicon for logo -->
     <link href="/images/logo_without_text.png" rel="icon" type="image/x-icon" />
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,28 +16,36 @@
     <!-- Our Own CSS-->
     <link rel="stylesheet" type="text/css" href="./styles/my_style.css">
 
-
+    <!-- Title shows up on tab -->
     <title>Gym4U</title>
 </head>
 
 
 <body>
-    <!-- navbar-light bg-secondary -->
+    <!-- Top Nav Bar -->
     <nav id="top_nav" class="navbar navbar-expand-lg">
         <div class="container-fluid">
+
+            <!-- left logo link -->
             <a href="login.html"><img src="./images/logo_without_text.png" class="img-fluid" id="logo" alt="logo"
                     style="width: 50px; height: 50px;"></a>
+
+            <!-- Center Title -->
             <h1>Gym4U</h1>
 
+            <!-- Hamburger menu button -->
             <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
                 aria-controls="offcanvasRight">&#9776;</button>
 
+            <!-- to close hamburger menu when it is open -->
             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
                 aria-labelledby="offcanvasRightLabel">
                 <div class="offcanvas-header">
                     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                         aria-label="Close"></button>
                 </div>
+
+                <!-- Links that are shown in the hamburger menu when it is open -->
                 <div class="offcanvas-body">
                     <div class="card">
                         <ul class="list-group list-group-flush">
@@ -49,6 +59,7 @@
         </div>
     </nav>
 
+    <!-- content container -->
     <div class="px-4 py-5 my-5 text-center">
         <img class="d-block mx-auto mb-4" src="images/background_image.jpg" alt="" id="background_image">
         <h1 class="display-5 fw-bold">Convenient, Cheaper Workouts</h1>
@@ -56,11 +67,13 @@
         <br />
         <div class="col-lg-6 mx-auto">
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <!-- login button link to new page -->
                 <button type="button" class="btn btn-lg px-4 gap-3" onclick="move_to_login()">Login</button>
-                <!-- btn-success -->
             </div>
         </div>
     </div>
+
+    <!-- sticky footer -->
     <footer id="bottom_nav">
         <div>
             &#169; Gym4U
@@ -77,6 +90,7 @@
     <script src="./scripts/sidebarmenu.js"></script>
 
     <script>
+        // link to open the login page
         function move_to_login() {
             var link = 'login.html'
             location.replace(link);
