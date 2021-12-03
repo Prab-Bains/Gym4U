@@ -2,7 +2,9 @@
 <html lang="en">
 
 <head>
+    <!-- favicon for logo -->
     <link href="/images/logo_without_text.png" rel="icon" type="image/x-icon" />
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,25 +29,33 @@
     <!-- Link to the api keys for your firebase project -->
     <script src="./scripts/firebaseAPI_DTC11.js"></script>
 
+    <!-- Title shows up on tab -->
     <title>Gym4U</title>
 </head>
 
 
 <body>
+    <!-- Top Nav Bar -->
     <nav id="top_nav" class="navbar navbar-expand-lg">
         <div class="container-fluid">
+
+            <!-- left logo link -->
             <a href="main.html"><img src="./images/logo_without_text.png" class="img-fluid" alt="logo"
                     style="width: 50px; height: 50px;"></a>
 
+            <!-- Hamburger menu button -->
             <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
                 aria-controls="offcanvasRight">&#9776;</button>
 
+            <!-- to close hamburger menu when it is open -->
             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
                 aria-labelledby="offcanvasRightLabel">
                 <div class="offcanvas-header">
                     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                         aria-label="Close"></button>
                 </div>
+
+                <!-- Links that are shown in the hamburger menu when it is open -->
                 <div class="offcanvas-body">
                     <div class="card">
                         <ul class="list-group list-group-flush">
@@ -61,15 +71,19 @@
         </div>
     </nav>
 
+    <!-- populate gym name from the database -->
     <h1 id="gymOverviewTitle"><span id="GymName"></span></h1>
     <br>
 
+    <!-- gym image -->
     <div id="gymOverview">
         <img src="/images/img3.jpg" alt="Gym Images" width="95%" height="300px">
 
+        <!-- gym description populated from database -->
         <h3><br>Description</h3>
         <p id="description"></p>
 
+        <!-- Items in gym populated from database -->
         <h3>What's Included</h3>
         <ul class="item">
             <li id="item1"></li>
@@ -78,6 +92,7 @@
             <li id="item4"></li>
         </ul>
 
+        <!-- show reviews populated from the database -->
         <h3>Reviews</h3>
         <div class="listings">
             <div class="container">
@@ -87,14 +102,13 @@
         </div>
         <br>
 
+        <!-- Link to review form page -->
         <a href="review.html" class="link-primary">Write a review</a>
 
         <br><br>
-
     </div>
 
-
-
+    <!-- sticky footer -->
     <footer id="bottom_nav">
         <div>
             Copyright Gym4U
@@ -102,12 +116,7 @@
 
     </footer>
 
-
-
-
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <!-- JS for hamburger menu functionality -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
         </script>
@@ -124,5 +133,3 @@
 </body>
 
 </html>
-
-
