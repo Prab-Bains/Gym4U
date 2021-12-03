@@ -66,7 +66,7 @@
     </nav>
 
     <div style="text-align: center;">
-    <button class="btn">Add Credit Card</button>
+    <button class="btn" id="openBtn">Add Credit Card</button>
     <button class="btn" onClick="readCardList()">Refresh</button>
     </div>
 
@@ -100,7 +100,7 @@
                 <input type="text" id="billing_id" placeholder="Enter your billing address" width="100px" name="billing"
                     required>
                 <button type="button" class="btn btn-lg px-4 gap-3" onClick="addCreditCard()">Save Card</button>
-                <button class="closeBtn">✖</button>
+                <button id="closeBtn">✖</button>
             </div>
         </div>
     </div>
@@ -204,7 +204,7 @@
                                 cvv_number = appointment_list[pointer]['cvv_number'];
                                 expiry_date = appointment_list[pointer]['expiry_date'];
                                 billing_info = appointment_list[pointer]['billing_info'];
-                                
+
                                 var containerform =
                                     `<div class="card text-white bg-secondary mb-5" id="${pointer}" style="max-width: 20rem;">
                                         <div class="card-header" id="card_name_id_${pointer}">${card_name}</div>
@@ -250,8 +250,8 @@
                         let lengthOfAppointmentList = Object.keys(appointment_list).length;
                         var i = 1
                         for (val in appointment_list) {
-                            new_appointment_list['a'+i] = appointment_list[val] 
-                            i++;      
+                            new_appointment_list['a'+i] = appointment_list[val]
+                            i++;
                         }
                         console.log(new_appointment_list)
                         currentDB.set(new_appointment_list);
@@ -309,8 +309,8 @@
             readCardList();
         }
 
-        document.querySelector(".openBtn").addEventListener("click", open);
-        document.querySelector(".closeBtn").addEventListener("click", close);
+        document.querySelector("#openBtn").addEventListener("click", open);
+        document.querySelector("#closeBtn").addEventListener("click", close);
         document.querySelector(".bg").addEventListener("click", close);
 
 
