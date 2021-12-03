@@ -4,9 +4,6 @@ function move_to_gym_overview() {
 }
 
 function displayGyms() {
-    // let hikeCardTemplate = document.getElementById("hikeCardTemplate");
-    // let hikeCardGroup = document.getElementById("gymCardGroup");
-
     db.collection("gyms").get()
         .then(allGyms => {
             allGyms.forEach(doc => {
@@ -25,7 +22,7 @@ function displayGyms() {
                         <p class="link-primary" onclick="gotoReview('${gymName}')">Write a review</a>
                         <br>
                         <p class="card-text">${gymDescription}</p>
-                        <a href="#" class="btn btn-primary" onclick="setGymData('${gymName}')" style="float: right"> Read
+                        <a href="#" class="btn btn-primary" id="readMoreButton" onclick="setGymData('${gymName}')" style="float: right"> Read
                             more</a>
                         </div>
                         </div>`

@@ -134,11 +134,6 @@ a:visited {
     font-size: 24px;
 }
 
-#hikeCardTemplate>img {
-    width: 100px;
-    height: 100px;
-}
-
 #gymOverviewTitle {
     text-align: center;
 }
@@ -221,4 +216,12 @@ a:visited {
     background-color: black;
     border-bottom: #00e6d0;
     color: white;
+}
+
+#readMoreButton{
+    background-color: #00e6d0;
+}
+
+#readMoreButton:hover{
+    color: #00e6d0;
 }
