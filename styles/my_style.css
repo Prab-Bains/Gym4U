@@ -1,3 +1,5 @@
+/* Our own CSS to override bootstrap CSS */
+
 body {
     background-color: black;
     color: white;
