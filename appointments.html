@@ -30,9 +30,6 @@
     <!-- Our Own CSS-->
     <link rel="stylesheet" type="text/css" href="./styles/my_style.css">
 
-    <!-- Our own JS -->
-    <script src="./scripts/sidebarmenu.js"></script>
-    <script src="./scripts/appointments.js"></script>
     <title>Gym4U</title>
 </head>
 
@@ -70,7 +67,7 @@
     <div class="container">
         <div id="appointment_button_group" style="text-align: center;">
             <button class="btn" id="openBtn">Add appointment</button>
-            <button class="btn" onClick="readAppointmentList()">Refresh</button>
+            <button class="btn" onclick="readAppointmentList()">Refresh</button>
 
 
         </div>
@@ -96,7 +93,7 @@
                     <input type="time" id="id_to_time" name="appt"><br>
                     <label for="appt">Select a Date:</label>
                     <input type="date" id="id_date" name="appt"><br>
-                    <button type="button" class="btn btn-secondary" onClick="addAppointment()">Add
+                    <button type="button" class="btn btn-secondary" onclick="addAppointment()">Add
                         appointment!</button>
                     <button id="closeBtn">✖</button>
                 </div>
@@ -115,6 +112,9 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
         </script>
 
+    <!-- Our own JS -->
+    <script src="./scripts/sidebarmenu.js"></script>
+    <script src="./scripts/appointments.js"></script>
 
     <script>
         readAppointmentList();
