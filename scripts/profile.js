@@ -135,7 +135,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
 });
 
-var storageRef = firebase.storage().ref("images/" + user.uid + ".jpg"); // Get reference
+var storageRef = firebase.storage().ref("images/" + user.uid + ".jpgit pullg"); // Get reference
 // Upload picked file to cloud storage
 storageRef.put(pickedfile)
     .then(function () {
