@@ -1,8 +1,10 @@
+// open the gym overview page on click
 function move_to_gym_overview() {
     var link = 'gymOverview.html'
     location.replace(link);
 }
 
+// display the dynamically created gym cards
 function displayGyms() {
     db.collection("gyms").get()
         .then(allGyms => {
@@ -31,8 +33,9 @@ function displayGyms() {
 
         })
 }
-displayGyms();
+displayGyms(); // calls the function to display
 
+// populate the page with the data for each gym in the database
 function setGymData(gymName) {
     console.log(gymName)
     localStorage.setItem('gymName', gymName);
@@ -40,6 +43,7 @@ function setGymData(gymName) {
     console.log("clicked")
 }
 
+// open a new window for the review form page
 function gotoReview(gymName) {
     console.log(gymName)
     localStorage.setItem('gymID', gymName);
