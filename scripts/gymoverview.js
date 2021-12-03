@@ -1,6 +1,8 @@
+// get the name of the gym from local storage
 let gymName = localStorage.getItem("gymName");
 console.log(gymName)
 
+// look for the gym name that was selected for data
 db.collection("gyms").where("name", "==", gymName)
     .get()
     .then(querygyms => {
@@ -9,7 +11,7 @@ db.collection("gyms").where("name", "==", gymName)
         // get the documents of query
         Gyms = querygyms.docs;
 
-        // We want to have one document per hike, so if the the result of
+        // We want to have one document per gym, so if the the result of
         //the query is more than one, we can check it right now and clean the DB if needed.
         if (size = 1) {
             var thisGym = Gyms[0].data();
@@ -35,6 +37,7 @@ db.collection("gyms").where("name", "==", gymName)
         console.log("Error getting documents: ", error);
     });
 
+// look for the reviews where the foreign key is the selected gym
 db.collection("Reviews").where("code", "==", gymName)
     .get()
     .then(allReviews => {
