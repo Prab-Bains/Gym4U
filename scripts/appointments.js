@@ -5,7 +5,7 @@
                     // check user signen in.
                     var currentDB = db.collection("appointment_dictionary").doc(uid)
                     currentDB.get().then(doc => {
-                        var target_object_key = id.slice(-2);   //id.slice(-2) means 'a1, a2 ... this is appointment identifier in screen'
+                        var target_object_key = id.slice(-2);   //id.slice(-2) means get 'a1, a2 ... this is appointment identifier in screen'
                         var appointment_list = doc.data();
                         let new_appointment_list = appointment_list;
 
@@ -104,6 +104,7 @@
                     alert("no user sign-in");
                 }
             })
+            alert("Succesfully, Add the appointment.");
         }
 
         function readAppointmentList() { // Print out appointments user have on the screen
