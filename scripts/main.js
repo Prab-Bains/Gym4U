@@ -1,3 +1,5 @@
+// Inserts name into the spaces in the html where "name-goes-here" is the ID
+
 function insertName() {
     firebase.auth().onAuthStateChanged(user => {
         // Check if user is signed in:
