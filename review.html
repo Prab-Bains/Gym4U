@@ -2,10 +2,8 @@
 <html lang="en">
 
 <head>
+    <!-- favicon for logo -->
     <link href="/images/logo_without_text.png" rel="icon" type="image/x-icon" />
-    <!-- Required meta tags --?
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -27,25 +25,33 @@
     <!-- Link to the api keys for your firebase project -->
     <script src="./scripts/firebaseAPI_DTC11.js"></script>
 
+    <!-- Title shows up on tab -->
     <title>Gym4U</title>
 </head>
 
 
 <body>
+    <!-- Top Nav Bar -->
     <nav id="top_nav" class="navbar navbar-expand-lg">
         <div class="container-fluid">
+
+            <!-- left logo link -->
             <a href="main.html"><img src="./images/logo_without_text.png" class="img-fluid" alt="logo"
                     style="width: 50px; height: 50px;"></a>
 
+            <!-- Hamburger menu button -->
             <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
                 aria-controls="offcanvasRight">&#9776;</button>
 
+            <!-- to close hamburger menu when it is open -->
             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
                 aria-labelledby="offcanvasRightLabel">
                 <div class="offcanvas-header">
                     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                         aria-label="Close"></button>
                 </div>
+
+                <!-- Links that are shown in the hamburger menu when it is open -->
                 <div class="offcanvas-body">
                     <div class="card">
                         <ul class="list-group list-group-flush">
@@ -61,8 +67,10 @@
         </div>
     </nav>
 
+    <!-- customized to call name of gym selected from database -->
     <h1>Write a review for <span id="GymName"></span></h1>
 
+    <!-- form to update the database with review -->
     <form>
         <div class="form-group">
             <label for="exampleFormControlInput1">Add a title</label>
@@ -76,26 +84,20 @@
 
         <br>
         <div class="d-flex justify-content-sm-center">
+
+            <!-- button connected to js for update -->
             <button type="button" class="btn btn-lg btn-primary" onclick="writeReview()">Submit</button>
         </div>
     </form>
 
-
-
-
-
+    <!-- sticky footer -->
     <footer id="bottom_nav">
         <div>
             &#169; Gym4U
         </div>
     </footer>
 
-
-
-
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <!-- JS for hamburger menu functionality -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
         </script>
